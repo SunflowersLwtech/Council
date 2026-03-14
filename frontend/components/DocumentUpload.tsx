@@ -21,6 +21,7 @@ export default function DocumentUpload() {
 
   const [isDragOver, setIsDragOver] = useState(false);
   const [textInput, setTextInput] = useState("");
+  const [language, setLanguage] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Voice input for textarea — appends transcribed text
@@ -49,23 +50,23 @@ export default function DocumentUpload() {
       e.preventDefault();
       setIsDragOver(false);
       const file = e.dataTransfer.files[0];
-      if (file) uploadDocument(file);
+      if (file) uploadDocument(file, language || undefined);
     },
-    [uploadDocument]
+    [uploadDocument, language]
   );
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (file) uploadDocument(file);
+      if (file) uploadDocument(file, language || undefined);
     },
-    [uploadDocument]
+    [uploadDocument, language]
   );
 
   const handleTextSubmit = useCallback(() => {
     const trimmed = textInput.trim();
-    if (trimmed) uploadText(trimmed);
-  }, [textInput, uploadText]);
+    if (trimmed) uploadText(trimmed, language || undefined);
+  }, [textInput, uploadText, language]);
 
   const isParsing = phase === "parsing";
 
@@ -244,6 +245,18 @@ export default function DocumentUpload() {
                 {voice.errorMessage}
               </p>
             )}
+            {/* Language preference */}
+            <input
+              className="w-full p-3 rounded-xl text-sm"
+              style={{
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border)",
+                color: "var(--text-primary)",
+              }}
+              placeholder="Language preference (e.g. 中文, English, 日本語)"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            />
             <button
               className="demo-btn w-full flex items-center justify-center gap-2"
               onClick={handleTextSubmit}

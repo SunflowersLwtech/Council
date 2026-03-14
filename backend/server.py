@@ -129,6 +129,7 @@ async def game_create(
     text: str | None = Form(None),
     num_characters: int | None = Form(None, ge=3, le=12),
     enabled_skills: str | None = Form(None),
+    language: str | None = Form(None),
 ):
     """Create a new game session from an uploaded document or text.
 
@@ -147,16 +148,16 @@ async def game_create(
                 return JSONResponse(status_code=413, content={"error": "File too large (max 10MB)"})
             result = await orch.create_session_from_file(
                 file_bytes, file.filename or "upload.pdf", num_characters,
-                enabled_skills=skill_list,
+                enabled_skills=skill_list, language=language,
             )
         elif text:
             result = await orch.create_session_from_text(
-                text, num_characters, enabled_skills=skill_list,
+                text, num_characters, enabled_skills=skill_list, language=language,
             )
         else:
             # Default: create with fallback world
             result = await orch.create_session_from_text(
-                "", num_characters, enabled_skills=skill_list,
+                "", num_characters, enabled_skills=skill_list, language=language,
             )
 
         # Register character voices with TTS
