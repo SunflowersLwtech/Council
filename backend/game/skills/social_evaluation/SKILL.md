@@ -6,7 +6,7 @@ description: >
   Sotopia 7-dimensional social intelligence evaluation. Tracks influence shifts,
   trust erosion, and narrative tension cues.
 tags: [narration, social, evaluation]
-targets: [narration]
+targets: [narration, character_agent]
 priority: 60
 dependencies: []
 conflicts: []

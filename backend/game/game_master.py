@@ -79,10 +79,7 @@ class GameMaster:
 
         if current == "lobby":
             state = game_state.advance_to_discussion(state)
-            narration = await self._generate_narration(state, "discussion_start", {
-                "round": state.round,
-                "summary_of_discussion": "",
-            })
+            narration = await self._generate_narration(state, "discussion_start_r1", {})
         elif current == "discussion":
             state = game_state.advance_to_voting(state)
             narration = await self._generate_narration(state, "voting_start", {})
@@ -702,7 +699,7 @@ class GameMaster:
 
         Returns:
             - "warning" if soft limit reached and warning not yet sent
-            - "end" if hard limit reached and should auto-transition to vote
+            - "end" if hard limit reached
             - None if within limits
         """
         round_msgs = [m for m in state.messages if m.round == state.round]
@@ -714,7 +711,8 @@ class GameMaster:
 
         session_warnings = self._discussion_warning_sent.setdefault(state.session_id, {})
 
-        if total_msgs >= hard_limit and session_warnings.get(state.round, False):
+        # Hard limit fires regardless of warning state
+        if total_msgs >= hard_limit:
             return "end"
         if total_msgs >= soft_limit and not session_warnings.get(state.round, False):
             session_warnings[state.round] = True
@@ -764,7 +762,7 @@ class GameMaster:
         try:
             response = await asyncio.wait_for(
                 self._mistral.chat.complete_async(
-                    model="mistral-large-latest",
+                    model="mistral-small-latest",
                     messages=[
                         {
                             "role": "system",
@@ -772,7 +770,7 @@ class GameMaster:
                         },
                         {
                             "role": "user",
-                            "content": f"Player says: {message}\n\nWhich characters should respond?",
+                            "content": f"Player says: {message}\n\nWhich characters should respond? (pick 2-3)",
                         },
                     ],
                     temperature=0.3,
@@ -783,7 +781,11 @@ class GameMaster:
             data = json.loads(response.choices[0].message.content)
             responder_ids = data.get("responders", [])
             valid_ids = {c.id for c in candidates}
-            return [rid for rid in responder_ids if rid in valid_ids][:3]
+            result = [rid for rid in responder_ids if rid in valid_ids][:3]
+            # Guarantee at least 1 responder
+            if not result:
+                result = [candidates[0].id]
+            return result
         except asyncio.TimeoutError:
             logger.warning("Responder selection timed out, using fallback")
             return [c.id for c in candidates[:2]]
@@ -802,12 +804,13 @@ class GameMaster:
         elimination_ratio = 1.0 - (alive_count / max(total, 1))
         round_factor = min(state.round / 6.0, 1.0)  # Rises over 6 rounds
 
-        state.tension_level = min(1.0, 0.2 + elimination_ratio * 0.4 + round_factor * 0.3)
+        base_tension = 0.2 + elimination_ratio * 0.4 + round_factor * 0.3
 
-        # Spike tension after night kills
+        # Spike tension after night kills (counted once, not re-applied)
         recent_kills = [a for a in state.night_actions if a.result == "killed"]
-        if recent_kills:
-            state.tension_level = min(1.0, state.tension_level + 0.15)
+        kill_spike = 0.15 if recent_kills else 0.0
+
+        state.tension_level = min(1.0, base_tension + kill_spike)
 
         return state
 
@@ -816,6 +819,11 @@ class GameMaster:
         round_msgs = [m for m in state.messages if m.round == state.round]
         if len(round_msgs) < 6:
             return False  # Too early in discussion
+
+        # Rate limit: at most 1 complication per round
+        round_complications = [e for e in state.game_events if e.round == state.round]
+        if round_complications:
+            return False
 
         # Check if recent messages are repetitive (low info content)
         recent = round_msgs[-4:]
@@ -830,8 +838,8 @@ class GameMaster:
         if not has_accusations and len(round_msgs) > 8:
             return True  # Lots of discussion but no one making moves
 
-        # Random chance increases with round number
-        if random.random() < min(0.1 * state.round, 0.5):
+        # Random chance increases with round number (capped lower)
+        if random.random() < min(0.08 * state.round, 0.3):
             return True
 
         return False
