@@ -9,11 +9,7 @@ python-multipart>=0.0.9
 # Structured output
 pydantic>=2.0.0
 
-# Google Gemini TTS
-google-genai>=1.0.0
-
-# assistant-transport protocol (optional)
-assistant-stream>=0.0.1
+# Gemini TTS uses httpx REST API (no SDK needed)
 
 # Redis (Upstash)
 redis[hiredis]>=5.0.0
