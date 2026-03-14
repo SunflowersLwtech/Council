@@ -9,7 +9,7 @@
 
 <br/>
 
-<img src="assets/powered-by.svg" alt="Powered by Mistral AI, PowerSync, ElevenLabs, Supabase" width="90%"/>
+<img src="assets/powered-by.svg" alt="Powered by Mistral AI, PowerSync, Gemini TTS, Supabase" width="90%"/>
 
 <br/>
 
@@ -25,7 +25,7 @@
 
 ---
 
-[What is COUNCIL](#what-is-council) · [Features](#-features) · [PowerSync Architecture](#-powersync-local-first-architecture) · [How It Works](#-how-it-works) · [Multi-Agent System](#-multi-agent-system) · [Mistral AI](#-powered-by-mistral-ai) · [ElevenLabs](#-powered-by-elevenlabs) · [Real-Time Streaming](#-dual-real-time-channels) · [Skills Architecture](#-modular-skills-architecture) · [Architecture](#-system-architecture) · [Quick Start](#-quick-start) · [API Reference](#-api-reference)
+[What is COUNCIL](#what-is-council) · [Features](#-features) · [PowerSync Architecture](#-powersync-local-first-architecture) · [How It Works](#-how-it-works) · [Multi-Agent System](#-multi-agent-system) · [Mistral AI](#-powered-by-mistral-ai) · [Gemini TTS](#-powered-by-gemini-tts) · [Real-Time Streaming](#-dual-real-time-channels) · [Skills Architecture](#-modular-skills-architecture) · [Architecture](#-system-architecture) · [Quick Start](#-quick-start) · [API Reference](#-api-reference)
 
 </div>
 
@@ -33,7 +33,7 @@
 
 ## What is COUNCIL?
 
-COUNCIL is a **local-first, real-time multiplayer** AI social deduction game that transforms any document into a fully playable experience with autonomous AI characters. Powered by **Mistral AI** for character cognition, **ElevenLabs** for voice synthesis, and **PowerSync** for seamless offline-capable data synchronization, it creates 5–8 AI agents — each with a unique personality, hidden role, and evolving agenda — that debate, deceive, form alliances, and eliminate each other around a 3D virtual roundtable.
+COUNCIL is a **local-first, real-time multiplayer** AI social deduction game that transforms any document into a fully playable experience with autonomous AI characters. Powered by **Mistral AI** for character cognition, **Gemini 2.5 Flash** for voice synthesis, and **PowerSync** for seamless offline-capable data synchronization, it creates 5–8 AI agents — each with a unique personality, hidden role, and evolving agenda — that debate, deceive, form alliances, and eliminate each other around a 3D virtual roundtable.
 
 **You join as a hidden player.** The AI characters don't know you're human. Can you survive the council?
 
@@ -43,7 +43,7 @@ Most AI games give you a chatbot to talk to. COUNCIL gives you a **society of ag
 
 > **Upload a PDF** about medieval court intrigue → AI generates Lords, Merchants, and Assassins, each with era-appropriate speech, hidden loyalties, and secret plots.
 >
-> **Paste a sci-fi excerpt** → Characters become space station crew members hunting a saboteur — voiced by ElevenLabs, animated in 3D, with memories of what every other character has said.
+> **Paste a sci-fi excerpt** → Characters become space station crew members hunting a saboteur — voiced by Gemini TTS, animated in 3D, with memories of what every other character has said.
 >
 > **Pick a built-in scenario** → Jump straight into classic social deduction with pre-designed worlds.
 
@@ -58,7 +58,7 @@ Most AI games give you a chatbot to talk to. COUNCIL gives you a **society of ag
 | **Autonomous AI Characters** | Each character has a 4-layer personality (Big Five, MBTI, Sims traits, Mind Mirror), 6-axis emotional state, persistent 3-tier memory, and per-character relationship tracking. |
 | **Hidden Role Gameplay** | Secret factions (Good vs. Evil), asymmetric night actions (Kill / Investigate / Protect / Poison), strategic voting with hidden AI reasoning. |
 | **Permission-Isolated Sync** | 6 PowerSync sync streams with row-level filtering — hidden roles sync only to the owning player via `auth.user_id()`. Other players never receive private data. |
-| **Real-Time Voice** | ElevenLabs TTS gives each character a unique voice with emotion-modulated delivery. Scribe API enables speech-to-text input. |
+| **Real-Time Voice** | Gemini 2.5 Flash TTS gives each character a unique voice (8-voice pool: Kore, Puck, Charon, Aoede, etc.) with emotion-modulated delivery via style prompts. |
 | **3D Roundtable** | Immersive Three.js scene with animated character avatars, phase-reactive lighting, dynamic camera tracking, floating particles, and atmospheric effects. |
 | **7 Modular Skills** | SKILL.md-defined cognitive modules with YAML frontmatter, dependency resolution, faction-conditional injection, and priority-ordered prompt augmentation. |
 | **Tension Engine** | Dynamic tension tracking with narrative complication injection — revelations, time pressure, suspicion shifts, alliance cracks, and evidence keep every session unpredictable. |
@@ -272,26 +272,25 @@ Characters are hardened against prompt injection, personality drift, and AI self
 
 ---
 
-## ✦ Powered by ElevenLabs
+## ✦ Powered by Gemini TTS
 
-ElevenLabs transforms COUNCIL from a text game into a **cinematic experience**. Characters don't just respond — they speak in distinct voices that carry emotion.
+Gemini 2.5 Flash TTS transforms COUNCIL from a text game into a **cinematic experience**. Characters don't just respond — they speak in distinct voices that carry emotion.
 
 ### Voice Architecture
 
 | Feature | Implementation | Details |
 |---------|---------------|---------|
-| **Text-to-Speech** | ElevenLabs TTS (`eleven_v3`) | Each character mapped to a unique voice from an 8-voice pool. Real-time streaming via chunked audio. |
-| **Emotion Tags** | Automatic injection | 6-axis emotional state → ElevenLabs v3 tags: `[angry]`, `[scared]`, `[excited]`, `[suspicious]`, `[curious]`, `[sighs]` |
-| **Speech-to-Text** | ElevenLabs Scribe v2 | Real-time transcription via WebSocket. Single-use tokens. Fallback to browser Web Speech API. |
+| **Text-to-Speech** | Gemini 2.5 Flash TTS (REST API) | Each character mapped to a unique voice from an 8-voice pool (Kore, Puck, Charon, Aoede, Leda, Orus, Zephyr, Fenrir). WAV output (24kHz, 16-bit, mono PCM). |
+| **Emotion Styling** | Automatic prompt injection | 6-axis emotional state → Gemini style instructions: "Say this angrily", "Say this fearfully", "Say this with excitement" |
 | **Audio Ducking** | Custom events | BGM fades when characters speak. Phase-aware volumes: night (0.15), discussion (0.25), voting (0.35). |
 
 ### Emotion-Driven Voice Delivery
 
-Every character response is analyzed by a 6-dimensional emotional model *before* TTS:
+Every character response is analyzed by a 6-dimensional emotional model *before* TTS. The `inject_emotion_tags()` function prepends Gemini-compatible style instructions:
 
-- A character with `fear: 0.8` after being accused → `[scared]` voice delivery
-- A Werewolf deflecting with `trust: 0.2` → `[suspicious]` undertone
-- A Doctor who saved someone overnight → `[excited]` the next morning
+- A character with `fear: 0.8` after being accused → "Say this fearfully, with a trembling voice"
+- A Werewolf deflecting with `trust: 0.2` → "Say this suspiciously, with doubt in your voice"
+- A Doctor who saved someone overnight, `happiness: 0.8` + `energy: 0.7` → "Say this with excitement and energy"
 
 ---
 
@@ -440,7 +439,7 @@ Cached per (skill, target, faction) tuple
 | **Auth** | Supabase Auth | Anonymous + email login, JWT for PowerSync + API |
 | **Backend** | Python 3.12 · FastAPI | REST + SSE streaming API, async game orchestration |
 | **LLM Engine** | Mistral AI SDK | All character cognition, world generation, voting, narration |
-| **Voice** | ElevenLabs SDK (`eleven_v3` / `scribe_v2`) | TTS with emotion tags, real-time STT |
+| **Voice** | Gemini 2.5 Flash TTS (REST API, no SDK) | TTS with emotion style prompts, 8-voice pool |
 | **Database** | Supabase PostgreSQL | 5 game tables, RLS enabled, WAL replication to PowerSync |
 | **Cache** | Redis via Upstash (24h TTL, optional) | Agent conversation history cache |
 | **Validation** | Pydantic v2 | All LLM response parsing with custom validators + retries |
@@ -505,7 +504,7 @@ Visual atmosphere achieved via `FloatingParticles` (100 fireflies, additive blen
 - [Mistral AI API key](https://console.mistral.ai/) — required
 - [Supabase project](https://supabase.com) — required (database + auth)
 - [PowerSync Cloud instance](https://www.powersync.com) — required (sync)
-- [ElevenLabs API key](https://elevenlabs.io/) — optional (voice features)
+- [Gemini API key](https://aistudio.google.com/apikey) — optional (voice features)
 
 ### 1. Clone & Set Up
 
@@ -537,8 +536,8 @@ MISTRAL_API_KEY=your_mistral_api_key
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-# Voice (optional — text-only without these)
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
+# Voice (optional — text-only without this)
+GEMINI_API_KEY=your_gemini_api_key
 
 # Cache (optional — in-memory only without these)
 REDIS_URL=rediss://your_upstash_redis_url
@@ -654,7 +653,7 @@ council/
 │   ├── models/
 │   │   └── game_models.py            # Pydantic v2 data models (20 models)
 │   └── voice/
-│       └── tts_middleware.py          # ElevenLabs TTS/STT + emotion tag injection
+│       └── tts_middleware.py          # Gemini TTS + emotion style injection
 │
 ├── frontend/
 │   ├── app/                          # Next.js App Router
@@ -682,7 +681,7 @@ council/
 │   │   ├── usePowerSyncGameState.tsx # PowerSync reactive SQL queries
 │   │   ├── useRoundtable.tsx         # 3D scene state (speaking, camera, focus)
 │   │   ├── useAuth.tsx               # Supabase Auth (anonymous + email)
-│   │   ├── useVoice.ts              # TTS queue + Scribe STT
+│   │   ├── useVoice.ts              # TTS queue + audio playback
 │   │   ├── useBackgroundAudio.ts    # Phase music + TTS ducking
 │   │   └── useSFX.ts               # Sound effects (vote, eliminate, phase)
 │   └── lib/
@@ -732,7 +731,7 @@ This project is licensed under the MIT License.
 
 <a href="https://mistral.ai"><img src="https://img.shields.io/badge/Mistral_AI-FA520F?style=for-the-badge&logo=mistralai&logoColor=white" alt="Mistral AI"/></a>
 <a href="https://www.powersync.com"><img src="https://img.shields.io/badge/PowerSync-C44DFF?style=for-the-badge" alt="PowerSync"/></a>
-<a href="https://elevenlabs.io"><img src="https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white" alt="ElevenLabs"/></a>
+<a href="https://aistudio.google.com"><img src="https://img.shields.io/badge/Gemini_TTS-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini TTS"/></a>
 <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase"/></a>
 
 <br/>
