@@ -72,18 +72,24 @@ class VoiceMiddleware:
     """Handles text-to-speech using Google Gemini TTS."""
 
     def __init__(self):
-        api_key = os.environ.get("GEMINI_API_KEY")
-        self.client = None
-        if api_key:
+        self._api_key = os.environ.get("GEMINI_API_KEY")
+        self._client = None  # Lazy-initialized on first use
+        self._character_voices: dict[str, str] = {}
+        if self._api_key:
+            logger.info("Gemini TTS configured (lazy init)")
+        else:
+            logger.warning("GEMINI_API_KEY not set — voice disabled")
+
+    def _get_client(self):
+        """Lazy-initialize the Gemini client on first use."""
+        if self._client is None and self._api_key:
             try:
                 from google import genai
-                self.client = genai.Client(api_key=api_key)
+                self._client = genai.Client(api_key=self._api_key)
                 logger.info("Gemini TTS client initialized")
             except ImportError:
                 logger.warning("google-genai package not installed")
-        else:
-            logger.warning("GEMINI_API_KEY not set — voice disabled")
-        self._character_voices: dict[str, str] = {}
+        return self._client
 
     def set_character_voices(self, voice_map: dict[str, str]):
         """Set dynamic character->voice mapping.
@@ -96,7 +102,7 @@ class VoiceMiddleware:
 
     @property
     def available(self) -> bool:
-        return self.client is not None
+        return self._api_key is not None
 
     async def text_to_speech(self, text: str, agent_id: str) -> bytes | None:
         """Convert text to speech audio.
@@ -115,7 +121,7 @@ class VoiceMiddleware:
                         agent_id, voice_name, len(text))
 
             response = await asyncio.to_thread(
-                self.client.models.generate_content,
+                self._get_client().models.generate_content,
                 model=TTS_MODEL,
                 contents=text,
                 config=types.GenerateContentConfig(
@@ -165,7 +171,7 @@ class VoiceMiddleware:
             from google.genai import types
 
             response = await asyncio.to_thread(
-                self.client.models.generate_content,
+                self._get_client().models.generate_content,
                 model=TTS_MODEL,
                 contents=text,
                 config=types.GenerateContentConfig(
