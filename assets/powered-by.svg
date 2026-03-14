@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 120" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a14"/>
+      <stop offset="100%" stop-color="#12122a"/>
+    </linearGradient>
+    <!-- PowerSync gradients -->
+    <linearGradient id="psGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/>
+      <stop offset="1" stop-color="#00d5ff"/>
+    </linearGradient>
+    <linearGradient id="psGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/>
+      <stop offset="1" stop-color="#a0f"/>
+    </linearGradient>
+    <!-- Supabase gradients -->
+    <linearGradient id="supaGrad1" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#249361"/>
+      <stop offset="1" stop-color="#3ECF8E"/>
+    </linearGradient>
+    <linearGradient id="supaGrad2" x1="0" y1="0" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop/>
+      <stop offset="1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="120" rx="12" fill="url(#bg)"/>
+
+  <!-- Divider lines -->
+  <line x1="40" y1="40" x2="960" y2="40" stroke="#2a2a4a" stroke-width="0.5" opacity="0.4"/>
+  <line x1="40" y1="100" x2="960" y2="100" stroke="#2a2a4a" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Section title -->
+  <text x="500" y="28" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="400" letter-spacing="4" opacity="0.5">POWERED BY</text>
+
+  <!-- ====== Mistral AI (official rainbow M icon) ====== -->
+  <g transform="translate(100, 70)">
+    <g transform="translate(-28, -13) scale(0.95)">
+      <rect x="0" y="0" width="5.5" height="5.5" fill="#FFD800"/>
+      <rect x="23.5" y="0" width="5.5" height="5.5" fill="#FFD800"/>
+      <rect x="0" y="5.5" width="11.5" height="5.5" fill="#FFAF00"/>
+      <rect x="17.5" y="5.5" width="11.5" height="5.5" fill="#FFAF00"/>
+      <rect x="0" y="11" width="29" height="5.5" fill="#FF8205"/>
+      <rect x="0" y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+      <rect x="11.5" y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+      <rect x="23.5" y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+      <rect x="0" y="22" width="17.5" height="5.5" fill="#E10500"/>
+      <rect x="11.5" y="22" width="17.5" height="5.5" fill="#E10500"/>
+    </g>
+    <text x="8" y="5" fill="#ff9f59" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="600">Mistral AI</text>
+    <text x="8" y="18" fill="#ff9f59" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Character Cognition</text>
+  </g>
+
+  <!-- Separator dot -->
+  <circle cx="250" cy="70" r="2" fill="#2a2a4a" opacity="0.6"/>
+
+  <!-- ====== PowerSync (official interlocking arrows) ====== -->
+  <g transform="translate(380, 70)">
+    <g transform="translate(-38, -15) scale(0.083)">
+      <path fill="url(#psGrad1)" d="M373.25,140.55l-44.88-77.73c-5.53-9.57-15.74-15.47-26.8-15.47h-46.24c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h20.21c7.37,0,14.18,3.93,17.86,10.32l33.35,57.76c3.69,6.38,3.69,14.25,0,20.63l-33.35,57.76c-3.68,6.38-10.49,10.32-17.87,10.32h-66.7c-7.37,0-14.18-3.93-17.87-10.32l-72.13-124.94c-1.99-3.44.5-7.74,4.47-7.74h20.21c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39c-1.84-3.19-5.25-5.16-8.93-5.16h-43.64c-3.69,0-7.09,1.97-8.93,5.16l-21.82,37.8c-1.84,3.19-1.84,7.12,0,10.31l10.04,17.39c1.99,3.44,6.95,3.44,8.93,0l10.1-17.5c1.98-3.44,6.95-3.44,8.93,0l77.9,134.93c5.53,9.57,15.74,15.47,26.8,15.47h89.75c11.06,0,21.27-5.9,26.8-15.47l44.88-77.73c5.53-9.57,5.53-21.37,0-30.94Z"/>
+      <path fill="url(#psGrad2)" d="M117.49,192.8c-1.84-3.19-5.25-5.16-8.93-5.16h-20.21c-7.37,0-14.18-3.93-17.86-10.32l-33.35-57.76c-3.69-6.38-3.69-14.25,0-20.63l33.35-57.76c3.69-6.38,10.5-10.32,17.87-10.31h66.7c7.37,0,14.18,3.93,17.86,10.32l72.13,124.94c1.99,3.44-.5,7.74-4.47,7.74h-20.21c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h43.64c3.69,0,7.09-1.97,8.93-5.16l21.82-37.8c1.84-3.19,1.84-7.12,0-10.31l-10.04-17.39c-1.98-3.44-6.95-3.44-8.93,0l-10.1,17.5c-1.99,3.44-6.95,3.44-8.93,0L193.37,16.05c-5.53-9.57-15.74-15.47-26.8-15.47h-89.75c-11.06,0-21.27,5.9-26.8,15.47L5.15,93.78c-5.53,9.57-5.53,21.37,0,30.94l44.88,77.73c5.53,9.57,15.74,15.47,26.8,15.47h46.24c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39Z"/>
+    </g>
+    <text x="4" y="5" fill="#7cb3ff" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="600">PowerSync</text>
+    <text x="4" y="18" fill="#7cb3ff" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Local-First Sync</text>
+  </g>
+
+  <!-- Separator dot -->
+  <circle cx="530" cy="70" r="2" fill="#2a2a4a" opacity="0.6"/>
+
+  <!-- ====== ElevenLabs (official "11" mark) ====== -->
+  <g transform="translate(640, 70)">
+    <g transform="translate(-28, -14)">
+      <rect x="0" y="0" width="8" height="28" rx="1" fill="white" opacity="0.85"/>
+      <rect x="14" y="0" width="8" height="28" rx="1" fill="white" opacity="0.85"/>
+    </g>
+    <text x="4" y="5" fill="white" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="600" opacity="0.85">ElevenLabs</text>
+    <text x="4" y="18" fill="white" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">Voice Synthesis</text>
+  </g>
+
+  <!-- Separator dot -->
+  <circle cx="790" cy="70" r="2" fill="#2a2a4a" opacity="0.6"/>
+
+  <!-- ====== Supabase (official lightning bolt) ====== -->
+  <g transform="translate(900, 70)">
+    <g transform="translate(-26, -15) scale(0.27)">
+      <path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#supaGrad1)"/>
+      <path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#supaGrad2)" fill-opacity="0.2"/>
+      <path d="M45.317 2.07103C48.1765 -1.53037 53.9745 0.442937 54.0434 5.041L54.4849 72.2922H9.83113C1.64038 72.2922 -2.92775 62.8321 2.1655 56.4175L45.317 2.07103Z" fill="#3ECF8E"/>
+    </g>
+    <text x="6" y="5" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="600">Supabase</text>
+    <text x="6" y="18" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Database + Auth</text>
+  </g>
+</svg>
