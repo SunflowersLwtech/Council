@@ -19,12 +19,17 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:8000/api/:path*",
-      },
-    ];
+    // Only proxy /api/* to local backend in development.
+    // In production, frontend calls NEXT_PUBLIC_API_URL directly.
+    if (process.env.NODE_ENV !== "production") {
+      return [
+        {
+          source: "/api/:path*",
+          destination: "http://localhost:8000/api/:path*",
+        },
+      ];
+    }
+    return [];
   },
   httpAgentOptions: {
     keepAlive: true,

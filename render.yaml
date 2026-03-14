@@ -1,0 +1,59 @@
+# Render Blueprint — COUNCIL Game
+# Backend: FastAPI (Python)
+# Frontend: Next.js (Node)
+
+services:
+  # ── Backend API ─────────────────────────────────────────────────────
+  - type: web
+    name: council-api
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python start.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: MISTRAL_AGENT_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_PROJECT_ID
+        sync: false
+      - key: SUPABASE_DB_HOST
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  # ── Frontend ────────────────────────────────────────────────────────
+  - type: web
+    name: council-web
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: NEXT_PUBLIC_POWERSYNC_URL
+        sync: false
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
