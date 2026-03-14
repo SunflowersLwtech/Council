@@ -5,14 +5,26 @@ import { Eye, EyeOff, Shield, Swords, Target, Users, User } from "lucide-react";
 import { useGameState } from "@/hooks/useGameState";
 import { seedToColor } from "@/components/CharacterCard";
 
+function getCurrentTask(phase: string, hasNightAction: boolean, isEvil: boolean): string {
+  switch (phase) {
+    case "discussion": return "Discuss and identify threats";
+    case "voting": return "Vote to eliminate a suspect";
+    case "night": return hasNightAction ? "Choose your night target" : "Wait for dawn";
+    case "reveal": return "Reviewing elimination";
+    case "ended": return "Game complete";
+    default: return "";
+  }
+}
+
 export default function PlayerRoleCard() {
-  const { playerRole, session, isGhostMode } = useGameState();
+  const { playerRole, session, isGhostMode, phase, nightActionRequired } = useGameState();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!playerRole || !session) return null;
 
   const isEvil = playerRole.allies.length > 0;
   const accentColor = isEvil ? "#ef4444" : "#3b82f6";
+  const currentTask = getCurrentTask(phase, !!nightActionRequired, isEvil);
 
   return (
     <>
@@ -38,6 +50,11 @@ export default function PlayerRoleCard() {
         <div className="player-badge-faction" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
           {playerRole.faction}
         </div>
+        {currentTask && (
+          <div className="player-badge-task" style={{ color: "var(--text-dim, #a0a0a0)", fontSize: "9px", marginLeft: "4px" }}>
+            {currentTask}
+          </div>
+        )}
       </button>
 
       {/* Full modal overlay */}
