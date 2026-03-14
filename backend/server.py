@@ -36,7 +36,10 @@ game_orchestrator: GameOrchestrator | None = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global voice, game_orchestrator
-    voice = VoiceMiddleware()
+    try:
+        voice = VoiceMiddleware()
+    except Exception as e:
+        logger.warning("Voice middleware init failed (TTS disabled): %s", e)
     persistence = PersistenceManager()
     await persistence.connect()
     game_orchestrator = GameOrchestrator(persistence=persistence)

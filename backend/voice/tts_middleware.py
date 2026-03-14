@@ -1,15 +1,18 @@
 """Gemini TTS middleware for COUNCIL voice interactions.
 
-Uses Google Gemini 2.5 Flash TTS for high-quality text-to-speech.
+Uses Google Gemini 2.5 Flash TTS via REST API (no SDK dependency).
 Outputs WAV audio (24kHz, 16-bit, mono PCM).
 """
 
 import os
 import struct
+import base64
 import asyncio
 import logging
 from typing import AsyncGenerator
 from dotenv import load_dotenv
+
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -22,13 +25,11 @@ BITS_PER_SAMPLE = 16
 BYTES_PER_SAMPLE = BITS_PER_SAMPLE // 8
 
 TTS_MODEL = "gemini-2.5-flash-preview-tts"
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
 
 def inject_emotion_tags(text: str, emotional_state) -> str:
-    """Prepend Gemini-compatible style instructions based on emotional state.
-
-    Gemini TTS uses natural language style cues in the content itself.
-    """
+    """Prepend Gemini-compatible style instructions based on emotional state."""
     if emotional_state.anger > 0.6:
         return f"Say this angrily and intensely: {text}"
     if emotional_state.fear > 0.6:
@@ -68,36 +69,51 @@ def _pcm_to_wav(pcm_data: bytes) -> bytes:
     return header + pcm_data
 
 
+async def _call_gemini_tts(api_key: str, text: str, voice_name: str) -> bytes | None:
+    """Call Gemini TTS REST API and return raw PCM audio bytes."""
+    url = f"{GEMINI_API_URL}/{TTS_MODEL}:generateContent?key={api_key}"
+    payload = {
+        "contents": [{"parts": [{"text": text}]}],
+        "generationConfig": {
+            "response_modalities": ["AUDIO"],
+            "speech_config": {
+                "voiceConfig": {
+                    "prebuiltVoiceConfig": {"voiceName": voice_name}
+                }
+            },
+        },
+    }
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        resp = await client.post(url, json=payload)
+        if resp.status_code != 200:
+            logger.error("Gemini TTS API error: %s %s", resp.status_code, resp.text[:200])
+            return None
+
+        data = resp.json()
+        candidates = data.get("candidates", [])
+        if candidates:
+            parts = candidates[0].get("content", {}).get("parts", [])
+            if parts and "inlineData" in parts[0]:
+                audio_b64 = parts[0]["inlineData"]["data"]
+                return base64.b64decode(audio_b64)
+
+    return None
+
+
 class VoiceMiddleware:
-    """Handles text-to-speech using Google Gemini TTS."""
+    """Handles text-to-speech using Google Gemini TTS REST API."""
 
     def __init__(self):
         self._api_key = os.environ.get("GEMINI_API_KEY")
-        self._client = None  # Lazy-initialized on first use
         self._character_voices: dict[str, str] = {}
         if self._api_key:
-            logger.info("Gemini TTS configured (lazy init)")
+            logger.info("Gemini TTS configured (REST API, no SDK)")
         else:
             logger.warning("GEMINI_API_KEY not set — voice disabled")
 
-    def _get_client(self):
-        """Lazy-initialize the Gemini client on first use."""
-        if self._client is None and self._api_key:
-            try:
-                from google import genai
-                self._client = genai.Client(api_key=self._api_key)
-                logger.info("Gemini TTS client initialized")
-            except ImportError:
-                logger.warning("google-genai package not installed")
-        return self._client
-
     def set_character_voices(self, voice_map: dict[str, str]):
-        """Set dynamic character->voice mapping.
-
-        Args:
-            voice_map: dict mapping character_id to Gemini voice name
-                       (e.g. {"abc123": "Kore"})
-        """
+        """Set dynamic character->voice mapping."""
         self._character_voices.update(voice_map)
 
     @property
@@ -105,43 +121,20 @@ class VoiceMiddleware:
         return self._api_key is not None
 
     async def text_to_speech(self, text: str, agent_id: str) -> bytes | None:
-        """Convert text to speech audio.
-
-        Returns WAV audio bytes or None if TTS is unavailable.
-        """
+        """Convert text to speech audio. Returns WAV bytes or None."""
         if not self.available:
             return None
 
         voice_name = self._character_voices.get(agent_id, "Kore")
 
         try:
-            from google.genai import types
-
             logger.info("TTS request: agent=%s, voice=%s, text_len=%d",
                         agent_id, voice_name, len(text))
 
-            response = await asyncio.to_thread(
-                self._get_client().models.generate_content,
-                model=TTS_MODEL,
-                contents=text,
-                config=types.GenerateContentConfig(
-                    response_modalities=["AUDIO"],
-                    speech_config=types.SpeechConfig(
-                        voice_config=types.VoiceConfig(
-                            prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                                voice_name=voice_name,
-                            )
-                        )
-                    ),
-                ),
-            )
-
-            if (response.candidates
-                    and response.candidates[0].content.parts
-                    and response.candidates[0].content.parts[0].inline_data):
-                pcm_data = response.candidates[0].content.parts[0].inline_data.data
+            pcm_data = await _call_gemini_tts(self._api_key, text, voice_name)
+            if pcm_data:
                 wav_data = _pcm_to_wav(pcm_data)
-                logger.info("TTS success: %d bytes (PCM %d bytes)", len(wav_data), len(pcm_data))
+                logger.info("TTS success: %d bytes", len(wav_data))
                 return wav_data
 
             logger.warning("TTS returned no audio data")
@@ -151,45 +144,13 @@ class VoiceMiddleware:
             return None
 
     async def stream_tts(self, text: str, voice_id: str) -> AsyncGenerator[bytes, None]:
-        """Generate TTS audio and yield as a single WAV chunk.
-
-        Gemini TTS does not support true streaming, so we generate the full
-        audio and yield it as one chunk with a WAV header. The frontend
-        Audio element handles progressive playback.
-
-        Args:
-            text: Text to convert to speech.
-            voice_id: Gemini voice name (e.g. "Kore", "Puck").
-
-        Yields:
-            WAV audio bytes.
-        """
+        """Generate TTS audio and yield as a single WAV chunk."""
         if not self.available:
             return
 
         try:
-            from google.genai import types
-
-            response = await asyncio.to_thread(
-                self._get_client().models.generate_content,
-                model=TTS_MODEL,
-                contents=text,
-                config=types.GenerateContentConfig(
-                    response_modalities=["AUDIO"],
-                    speech_config=types.SpeechConfig(
-                        voice_config=types.VoiceConfig(
-                            prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                                voice_name=voice_id,
-                            )
-                        )
-                    ),
-                ),
-            )
-
-            if (response.candidates
-                    and response.candidates[0].content.parts
-                    and response.candidates[0].content.parts[0].inline_data):
-                pcm_data = response.candidates[0].content.parts[0].inline_data.data
+            pcm_data = await _call_gemini_tts(self._api_key, text, voice_id)
+            if pcm_data:
                 yield _pcm_to_wav(pcm_data)
             else:
                 logger.warning("TTS stream returned no audio data")
