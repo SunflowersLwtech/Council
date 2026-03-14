@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-14T09:20:44.858781+00:00",
+    "server_url": "http://127.0.0.1:8000",
+    "gemini_audio": false,
+    "text_only": true
+  },
+  "summary": {
+    "total_turns": 10,
+    "passed": 0,
+    "failed": 10,
+    "pass_rate": "0.0%"
+  },
+  "conversations": {
+    "A_mixed": {
+      "total": 10,
+      "passed": 0,
+      "failed": 10,
+      "turns": [
+        {
+          "turn_id": "A01_create",
+          "text": "A mystery in a Victorian mansion.",
+          "phase": "create",
+          "passed": false,
+          "failures": [
+            "Exception: ReadTimeout: "
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 120.00892425001075,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A02_start",
+          "text": "",
+          "phase": "start",
+          "passed": false,
+          "failures": [
+            "No session to start"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 2.445800055284053e-05,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A03_greet",
+          "text": "Good evening everyone. I believe we have some dark business to discuss tonight.",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 2.920899714808911e-05,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A04_accuse",
+          "text": "I noticed the butler was seen near the wine cellar at midnight. What do you have to say?",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 5.917012458667159e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A05_defend",
+          "text": "Let's not jump to conclusions. We need evidence, not rumors.",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 8.916991646401584e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A06_probe",
+          "text": "Has anyone seen anything unusual in the east wing?",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 2.0419975044205785e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A07_pressure",
+          "text": "Time is running out. We must decide who to vote against.",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 4.583998816087842e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A08_vote",
+          "text": "",
+          "phase": "vote",
+          "passed": false,
+          "failures": [
+            "No session/characters for vote"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 3.7080026231706142e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A09_night",
+          "text": "",
+          "phase": "night",
+          "passed": false,
+          "failures": [
+            "No session for night"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 3.4170079743489623e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        },
+        {
+          "turn_id": "A10_morning",
+          "text": "Another dawn, another mystery. Who didn't make it through the night?",
+          "phase": "chat",
+          "passed": false,
+          "failures": [
+            "No session for chat"
+          ],
+          "response_text": "",
+          "events": [],
+          "latency_sec": 1.9160070223733783e-06,
+          "audio_generated": false,
+          "audio_transcribed": ""
+        }
+      ]
+    }
+  }
+}

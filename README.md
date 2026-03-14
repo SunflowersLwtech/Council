@@ -9,9 +9,9 @@
 
 <br/>
 
-[![Mistral AI](https://img.shields.io/badge/Powered_by-Mistral_AI-FA520F?style=for-the-badge&logo=mistralai&logoColor=white)](https://mistral.ai)
-[![PowerSync](https://img.shields.io/badge/Sync_by-PowerSync-C44DFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTggMTJoOE0xMiA4djgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==&logoColor=white)](https://www.powersync.com)
-[![ElevenLabs](https://img.shields.io/badge/Voice_by-ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)](https://elevenlabs.io)
+<img src="assets/powered-by.svg" alt="Powered by Mistral AI, PowerSync, ElevenLabs, Supabase" width="90%"/>
+
+<br/>
 
 [![Python](https://img.shields.io/badge/Python_3.12-3776AB?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -726,9 +726,17 @@ This project is licensed under the MIT License.
 
 <div align="center">
 
+<img src="assets/Council.png" alt="COUNCIL" width="80"/>
+
+<br/>
+
 <a href="https://mistral.ai"><img src="https://img.shields.io/badge/Mistral_AI-FA520F?style=for-the-badge&logo=mistralai&logoColor=white" alt="Mistral AI"/></a>
 <a href="https://www.powersync.com"><img src="https://img.shields.io/badge/PowerSync-C44DFF?style=for-the-badge" alt="PowerSync"/></a>
 <a href="https://elevenlabs.io"><img src="https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white" alt="ElevenLabs"/></a>
 <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase"/></a>
+
+<br/>
+
+**Built for the [PowerSync AI Hackathon](https://www.powersync.com)**
 
 </div>

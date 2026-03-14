@@ -59,8 +59,11 @@
 
   <!-- ==================== FRONTEND SECTION ==================== -->
   <rect x="30" y="70" width="550" height="260" rx="8" fill="url(#frontendGrad)" stroke="#3b82f6" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
-  <text x="50" y="95" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">FRONTEND</text>
-  <text x="190" y="95" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="10" opacity="0.5">Next.js 15 · React 19 · TypeScript</text>
+  <!-- Next.js icon -->
+  <circle cx="52" cy="90" r="8" fill="white" opacity="0.15"/>
+  <text x="52" y="94" text-anchor="middle" fill="white" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="800" opacity="0.6">N</text>
+  <text x="66" y="95" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">FRONTEND</text>
+  <text x="200" y="95" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="10" opacity="0.5">Next.js 15 · React 19 · TypeScript</text>
 
   <!-- 3D Scene box -->
   <rect x="50" y="110" width="160" height="80" rx="6" fill="#1a1a3a" stroke="#3b82f6" stroke-width="0.5" opacity="0.7"/>
@@ -104,15 +107,29 @@
 
   <!-- ==================== POWERSYNC CLOUD ==================== -->
   <rect x="30" y="360" width="310" height="100" rx="8" fill="url(#syncGrad)" stroke="#c44dff" stroke-width="1.2" opacity="0.9" filter="url(#boxShadow)"/>
-  <text x="50" y="388" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">POWERSYNC CLOUD</text>
+  <!-- PowerSync official icon -->
+  <linearGradient id="archPsGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+    <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#00d5ff"/>
+  </linearGradient>
+  <linearGradient id="archPsGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+    <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#a0f"/>
+  </linearGradient>
+  <g transform="translate(36, 375) scale(0.055)">
+    <path fill="url(#archPsGrad1)" d="M373.25,140.55l-44.88-77.73c-5.53-9.57-15.74-15.47-26.8-15.47h-46.24c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h20.21c7.37,0,14.18,3.93,17.86,10.32l33.35,57.76c3.69,6.38,3.69,14.25,0,20.63l-33.35,57.76c-3.68,6.38-10.49,10.32-17.87,10.32h-66.7c-7.37,0-14.18-3.93-17.87-10.32l-72.13-124.94c-1.99-3.44.5-7.74,4.47-7.74h20.21c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39c-1.84-3.19-5.25-5.16-8.93-5.16h-43.64c-3.69,0-7.09,1.97-8.93,5.16l-21.82,37.8c-1.84,3.19-1.84,7.12,0,10.31l10.04,17.39c1.99,3.44,6.95,3.44,8.93,0l10.1-17.5c1.98-3.44,6.95-3.44,8.93,0l77.9,134.93c5.53,9.57,15.74,15.47,26.8,15.47h89.75c11.06,0,21.27-5.9,26.8-15.47l44.88-77.73c5.53-9.57,5.53-21.37,0-30.94Z"/>
+    <path fill="url(#archPsGrad2)" d="M117.49,192.8c-1.84-3.19-5.25-5.16-8.93-5.16h-20.21c-7.37,0-14.18-3.93-17.86-10.32l-33.35-57.76c-3.69-6.38-3.69-14.25,0-20.63l33.35-57.76c3.69-6.38,10.5-10.32,17.87-10.31h66.7c7.37,0,14.18,3.93,17.86,10.32l72.13,124.94c1.99,3.44-.5,7.74-4.47,7.74h-20.21c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h43.64c3.69,0,7.09-1.97,8.93-5.16l21.82-37.8c1.84-3.19,1.84-7.12,0-10.31l-10.04-17.39c-1.98-3.44-6.95-3.44-8.93,0l-10.1,17.5c-1.99,3.44-6.95,3.44-8.93,0L193.37,16.05c-5.53-9.57-15.74-15.47-26.8-15.47h-89.75c-11.06,0-21.27,5.9-26.8,15.47L5.15,93.78c-5.53,9.57-5.53,21.37,0,30.94l44.88,77.73c5.53,9.57,15.74,15.47,26.8,15.47h46.24c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39Z"/>
+  </g>
+  <text x="60" y="388" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">POWERSYNC CLOUD</text>
   <text x="50" y="410" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.6">6 Sync Streams · Row-Level Filtering</text>
   <text x="50" y="425" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.6">auth.user_id() permission isolation</text>
   <text x="50" y="440" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.6">Incremental WAL Replication</text>
 
   <!-- ==================== BACKEND SECTION ==================== -->
   <rect x="620" y="70" width="550" height="260" rx="8" fill="url(#backendGrad)" stroke="#a855f7" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
-  <text x="640" y="95" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">BACKEND</text>
-  <text x="740" y="95" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="10" opacity="0.5">FastAPI · Python 3.12</text>
+  <!-- Python icon -->
+  <circle cx="642" cy="90" r="8" fill="#3776AB" opacity="0.25"/>
+  <text x="642" y="94" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="800" opacity="0.7">Py</text>
+  <text x="656" y="95" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">BACKEND</text>
+  <text x="756" y="95" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="10" opacity="0.5">FastAPI · Python 3.12</text>
 
   <!-- Orchestrator box -->
   <rect x="640" y="110" width="160" height="80" rx="6" fill="#1a1a3a" stroke="#a855f7" stroke-width="0.5" opacity="0.7"/>
@@ -137,7 +154,20 @@
 
   <!-- Mistral AI box -->
   <rect x="640" y="205" width="200" height="65" rx="6" fill="#1a1a3a" stroke="#ff6b35" stroke-width="1" opacity="0.9"/>
-  <text x="740" y="228" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Mistral AI</text>
+  <!-- Mistral official rainbow M mini -->
+  <g transform="translate(693, 218)">
+    <g transform="translate(-8, -5) scale(0.4)">
+      <rect width="5.5" height="5.5" fill="#FFD800"/>
+      <rect x="23.5" width="5.5" height="5.5" fill="#FFD800"/>
+      <rect y="5.5" width="11.5" height="5.5" fill="#FFAF00"/>
+      <rect x="17.5" y="5.5" width="11.5" height="5.5" fill="#FFAF00"/>
+      <rect y="11" width="29" height="5.5" fill="#FF8205"/>
+      <rect y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+      <rect x="11.5" y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+      <rect x="23.5" y="16.5" width="5.5" height="5.5" fill="#FA500F"/>
+    </g>
+  </g>
+  <text x="750" y="228" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Mistral AI</text>
   <text x="740" y="244" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">mistral-large · mistral-small · mistral-ocr</text>
   <text x="740" y="258" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Streaming · Function Calling · JSON Mode</text>
 
@@ -155,7 +185,15 @@
 
   <!-- ==================== DATABASE SECTION ==================== -->
   <rect x="360" y="360" width="470" height="100" rx="8" fill="url(#dbGrad)" stroke="#3fcf8e" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
-  <text x="380" y="388" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">SUPABASE POSTGRESQL</text>
+  <!-- Supabase official icon -->
+  <linearGradient id="archSupaGrad" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
+    <stop stop-color="#249361"/><stop offset="1" stop-color="#3ECF8E"/>
+  </linearGradient>
+  <g transform="translate(370, 374) scale(0.14)">
+    <path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#archSupaGrad)"/>
+    <path d="M45.317 2.07103C48.1765 -1.53037 53.9745 0.442937 54.0434 5.041L54.4849 72.2922H9.83113C1.64038 72.2922 -2.92775 62.8321 2.1655 56.4175L45.317 2.07103Z" fill="#3ECF8E"/>
+  </g>
+  <text x="392" y="388" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">SUPABASE POSTGRESQL</text>
 
   <!-- Table pills -->
   <rect x="380" y="400" width="100" height="20" rx="10" fill="#3fcf8e" opacity="0.15"/>
