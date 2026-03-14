@@ -147,6 +147,12 @@ The `usePowerSyncGameState` hook runs 5 reactive SQL queries against the local S
 | **Night** | Kill / Investigate / Protect / Poison via Mistral function calling | Results synced only to affected players via private streams |
 | **Loop** | Cycle continues until a faction achieves its win condition | Round 6 cap; majority faction wins |
 
+### Progressive Disclosure
+
+<div align="center">
+<img src="assets/progressive-disclosure.svg" alt="Progressive Disclosure — Information Reveal Timeline" width="100%"/>
+</div>
+
 ---
 
 ## ✦ Multi-Agent System
@@ -274,6 +280,10 @@ Characters are hardened against prompt injection, personality drift, and AI self
 
 ## ✦ Powered by Gemini TTS
 
+<div align="center">
+<img src="assets/voice-pipeline.svg" alt="Gemini TTS Voice Pipeline" width="100%"/>
+</div>
+
 Gemini 2.5 Flash TTS transforms COUNCIL from a text game into a **cinematic experience**. Characters don't just respond — they speak in distinct voices that carry emotion.
 
 ### Voice Architecture
@@ -295,6 +305,10 @@ Every character response is analyzed by a 6-dimensional emotional model *before*
 ---
 
 ## ✦ Dynamic Tension Engine
+
+<div align="center">
+<img src="assets/tension-engine.svg" alt="Dynamic Tension Engine" width="100%"/>
+</div>
 
 The **Tension Engine** continuously tracks the emotional temperature of the game and dynamically injects narrative complications when discussion stalls, consensus forms too quickly, or a faction is cruising without opposition.
 
@@ -319,6 +333,10 @@ Complications are **non-repeating within a session** and escalate in intensity a
 ---
 
 ## ✦ Dual Real-Time Channels
+
+<div align="center">
+<img src="assets/realtime-streaming.svg" alt="Dual Real-Time Streaming Architecture" width="100%"/>
+</div>
 
 COUNCIL uses two complementary real-time systems in parallel:
 
@@ -360,6 +378,10 @@ Backend write → Supabase → WAL → PowerSync Cloud → Client SQLite → use
 ---
 
 ## ✦ Modular Skills Architecture
+
+<div align="center">
+<img src="assets/skills-system.svg" alt="Modular Cognitive Skills Architecture" width="100%"/>
+</div>
 
 COUNCIL implements a **modular cognitive skills system** — 7 SKILL.md-defined skill modules that augment agent intelligence at runtime through dependency-resolved, faction-conditional prompt injection.
 
