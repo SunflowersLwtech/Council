@@ -118,6 +118,16 @@ export function useSessionActions(
 ) {
   const HOWTOPLAY_STORAGE_KEY = "council_howtoplay_seen";
 
+  // After session is created, immediately fetch player role so lobby shows identity
+  const fetchPlayerRole = useCallback(async (sessionId: string) => {
+    try {
+      const role = await api.getPlayerRole(sessionId);
+      dispatch({ type: "SET_PLAYER_ROLE", role });
+    } catch {
+      // Player role may not be assigned yet — that's fine
+    }
+  }, [dispatch]);
+
   const uploadDocument = useCallback(async (file: File, language?: string) => {
     dispatch({ type: "SET_PHASE", phase: "parsing" });
     dispatch({ type: "SET_PARSE_PROGRESS", text: "Analyzing document..." });
@@ -126,11 +136,12 @@ export function useSessionActions(
       const sess = await api.createGameFromDocument(file, language);
       dispatch({ type: "SESSION_CREATED", session: sess });
       localStorage.setItem(STORAGE_KEY, sess.session_id);
+      fetchPlayerRole(sess.session_id);
     } catch (err) {
       dispatch({ type: "SET_ERROR", error: err instanceof Error ? err.message : "Upload failed" });
       dispatch({ type: "SET_PHASE", phase: "upload" });
     }
-  }, [dispatch]);
+  }, [dispatch, fetchPlayerRole]);
 
   const uploadText = useCallback(async (text: string, language?: string) => {
     dispatch({ type: "SET_PHASE", phase: "parsing" });
@@ -140,11 +151,12 @@ export function useSessionActions(
       const sess = await api.createGameFromText(text, language);
       dispatch({ type: "SESSION_CREATED", session: sess });
       localStorage.setItem(STORAGE_KEY, sess.session_id);
+      fetchPlayerRole(sess.session_id);
     } catch (err) {
       dispatch({ type: "SET_ERROR", error: err instanceof Error ? err.message : "Creation failed" });
       dispatch({ type: "SET_PHASE", phase: "upload" });
     }
-  }, [dispatch]);
+  }, [dispatch, fetchPlayerRole]);
 
   const loadScenario = useCallback(async (id: string) => {
     dispatch({ type: "SET_PHASE", phase: "parsing" });
@@ -154,11 +166,12 @@ export function useSessionActions(
       const sess = await api.loadScenario(id);
       dispatch({ type: "SESSION_CREATED", session: sess });
       localStorage.setItem(STORAGE_KEY, sess.session_id);
+      fetchPlayerRole(sess.session_id);
     } catch (err) {
       dispatch({ type: "SET_ERROR", error: err instanceof Error ? err.message : "Failed to load scenario" });
       dispatch({ type: "SET_PHASE", phase: "upload" });
     }
-  }, [dispatch]);
+  }, [dispatch, fetchPlayerRole]);
 
   const startGame = useCallback(async () => {
     const session = stateRef.current.session;

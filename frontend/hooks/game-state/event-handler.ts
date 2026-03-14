@@ -79,6 +79,16 @@ export function createStreamEventHandler(ctx: EventHandlerContext) {
         const actorKey =
           event.character_id || event.character_name || "__unknown_stream_actor";
         streamBuffer.markEnd(actorKey, event);
+        // Trigger TTS immediately — don't wait for buffer drain.
+        // The buffer's onFinalize handles UI state only.
+        if ((event.tts_text || event.content) && event.character_name) {
+          ctx.onCharacterResponseRef.current?.(
+            event.tts_text || event.content || "",
+            event.character_name,
+            event.voice_id,
+            event.character_id,
+          );
+        }
         break;
       }
 
