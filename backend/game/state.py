@@ -1,4 +1,7 @@
-"""Game phase state machine with validated transitions."""
+"""Game phase state machine with validated transitions.
+
+Keep TRANSITIONS in sync with frontend/lib/phase-machine.ts SERVER_TRANSITIONS.
+"""
 
 from backend.models.game_models import GameState
 
