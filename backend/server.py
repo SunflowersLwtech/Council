@@ -41,10 +41,16 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning("Voice middleware init failed (TTS disabled): %s", e)
     persistence = PersistenceManager()
-    await persistence.connect()
+    try:
+        await persistence.connect()
+    except Exception as e:
+        logger.warning("Persistence connect failed (in-memory only): %s", e)
     game_orchestrator = GameOrchestrator(persistence=persistence)
     yield
-    await persistence.close()
+    try:
+        await persistence.close()
+    except Exception:
+        pass
 
 
 app = FastAPI(title="COUNCIL API", version="0.2.0", lifespan=lifespan)
