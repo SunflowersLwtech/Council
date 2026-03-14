@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://unpkg.com/@powersync/cli-schemas@latest/json-schema/service-config.json
+
+_type: cloud
+name: council-game
+
+# Supabase COUNCIL project is in ap-northeast-2 (Seoul)
+region: us
+
+replication:
+  connections:
+    - type: postgresql
+      uri: postgresql://powersync_role:ps_council_2026_hackathon@db.zxbyaofevfsaieukcuuj.supabase.co:5432/postgres
+      sslmode: verify-full
+
+client_auth:
+  supabase: true

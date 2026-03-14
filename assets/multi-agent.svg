@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a14"/>
+      <stop offset="100%" stop-color="#0f0f20"/>
+    </linearGradient>
+    <radialGradient id="agentGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="boxShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="38" text-anchor="middle" fill="white" font-family="'Playfair Display',Georgia,serif" font-size="22" font-weight="700" letter-spacing="4">MULTI-AGENT CHARACTER SYSTEM</text>
+
+  <!-- ==================== LEFT: 4-Layer Prompt Architecture ==================== -->
+  <rect x="30" y="60" width="380" height="420" rx="8" fill="#1a1a3a" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+  <text x="220" y="85" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="2">4-LAYER CHARACTER PROMPT</text>
+
+  <!-- Layer 1 -->
+  <rect x="50" y="100" width="340" height="60" rx="5" fill="#ef4444" opacity="0.08" stroke="#ef4444" stroke-width="0.8"/>
+  <text x="70" y="120" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="700">LAYER 1 — STRATEGIC BRAIN</text>
+  <text x="70" y="136" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Hidden role · Faction · Win condition · Behavioral rules</text>
+  <text x="70" y="150" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">"Never reveal your role. Deflect suspicion onto others."</text>
+
+  <!-- Layer 2 -->
+  <rect x="50" y="168" width="340" height="60" rx="5" fill="#ff6b35" opacity="0.08" stroke="#ff6b35" stroke-width="0.8"/>
+  <text x="70" y="188" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="700">LAYER 2 — CHARACTER HEART</text>
+  <text x="70" y="204" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Name · Speaking style · Public role · Motivation</text>
+  <text x="70" y="218" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">Moral values · Decision style · Deep secret</text>
+
+  <!-- Layer 3 -->
+  <rect x="50" y="236" width="340" height="70" rx="5" fill="#a855f7" opacity="0.08" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="70" y="256" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="700">LAYER 3 — PERSONALITY DNA</text>
+  <text x="70" y="272" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Big Five (O/C/E/A/N) · MBTI type</text>
+  <text x="70" y="286" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Sims traits: neat/outgoing/active/playful/nice (25-pt budget)</text>
+  <text x="70" y="298" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">Mind Mirror: bio · emotional · mental · social planes</text>
+
+  <!-- Layer 4 -->
+  <rect x="50" y="314" width="340" height="70" rx="5" fill="#3b82f6" opacity="0.08" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="70" y="334" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="700">LAYER 4 — DYNAMIC STATE + SKILLS</text>
+  <text x="70" y="350" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">6-Axis Emotions · 3-Tier Memory · Relationships</text>
+  <text x="70" y="364" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">7 Cognitive Skill Injections (YAML, faction-filtered)</text>
+  <text x="70" y="376" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">Priority-sorted · Dependency-resolved · Cached</text>
+
+  <!-- Anti-jailbreak bar -->
+  <rect x="50" y="395" width="340" height="30" rx="5" fill="#ef4444" opacity="0.05" stroke="#ef4444" stroke-width="0.5"/>
+  <text x="220" y="415" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Anti-Jailbreak: regex filtering · canon tracking · _validate_in_character()</text>
+
+  <!-- ==================== CENTER: Emotional State ==================== -->
+  <rect x="430" y="60" width="340" height="200" rx="8" fill="#1a1a3a" stroke="#eab308" stroke-width="0.8" opacity="0.6"/>
+  <text x="600" y="85" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="2">6-AXIS EMOTIONAL STATE</text>
+
+  <!-- Emotion bars -->
+  <g transform="translate(450, 100)">
+    <text x="0" y="12" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Happiness</text>
+    <rect x="80" y="2" width="200" height="14" rx="3" fill="#fde047" opacity="0.06"/>
+    <rect x="80" y="2" width="140" height="14" rx="3" fill="#fde047" opacity="0.25"/>
+
+    <text x="0" y="34" fill="#ef4444" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Anger</text>
+    <rect x="80" y="24" width="200" height="14" rx="3" fill="#ef4444" opacity="0.06"/>
+    <rect x="80" y="24" width="60" height="14" rx="3" fill="#ef4444" opacity="0.25"/>
+
+    <text x="0" y="56" fill="#a855f7" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Fear</text>
+    <rect x="80" y="46" width="200" height="14" rx="3" fill="#a855f7" opacity="0.06"/>
+    <rect x="80" y="46" width="90" height="14" rx="3" fill="#a855f7" opacity="0.25"/>
+
+    <text x="0" y="78" fill="#3fcf8e" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Trust</text>
+    <rect x="80" y="68" width="200" height="14" rx="3" fill="#3fcf8e" opacity="0.06"/>
+    <rect x="80" y="68" width="120" height="14" rx="3" fill="#3fcf8e" opacity="0.25"/>
+
+    <text x="0" y="100" fill="#3b82f6" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Energy</text>
+    <rect x="80" y="90" width="200" height="14" rx="3" fill="#3b82f6" opacity="0.06"/>
+    <rect x="80" y="90" width="160" height="14" rx="3" fill="#3b82f6" opacity="0.25"/>
+
+    <text x="0" y="122" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.7">Curiosity</text>
+    <rect x="80" y="112" width="200" height="14" rx="3" fill="#06b6d4" opacity="0.06"/>
+    <rect x="80" y="112" width="170" height="14" rx="3" fill="#06b6d4" opacity="0.25"/>
+  </g>
+
+  <text x="600" y="248" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">Updated via LLM + keyword fallback · Decays toward neutral each round</text>
+
+  <!-- ==================== CENTER: Memory System ==================== -->
+  <rect x="430" y="275" width="340" height="130" rx="8" fill="#1a1a3a" stroke="#3b82f6" stroke-width="0.8" opacity="0.6"/>
+  <text x="600" y="300" text-anchor="middle" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="2">3-TIER MEMORY</text>
+
+  <rect x="450" y="310" width="300" height="25" rx="4" fill="#3b82f6" opacity="0.08" stroke="#3b82f6" stroke-width="0.5"/>
+  <text x="470" y="327" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="9">STM — 10 raw events (recent interactions)</text>
+
+  <rect x="450" y="342" width="300" height="25" rx="4" fill="#6366f1" opacity="0.08" stroke="#6366f1" stroke-width="0.5"/>
+  <text x="470" y="359" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="9">Episodic — 8 compressed round summaries</text>
+
+  <rect x="450" y="374" width="300" height="25" rx="4" fill="#a855f7" opacity="0.08" stroke="#a855f7" stroke-width="0.5"/>
+  <text x="470" y="391" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="9">Semantic — Canon facts (never contradicted)</text>
+
+  <!-- ==================== RIGHT: Agent Properties ==================== -->
+  <rect x="790" y="60" width="380" height="420" rx="8" fill="#1a1a3a" stroke="#c44dff" stroke-width="0.8" opacity="0.6"/>
+  <text x="980" y="85" text-anchor="middle" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="2">AGENT CAPABILITIES</text>
+
+  <!-- Properties list -->
+  <g transform="translate(810, 100)">
+    <rect x="0" y="0" width="340" height="32" rx="4" fill="#ff6b35" opacity="0.06"/>
+    <text x="15" y="14" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Independent Reasoning</text>
+    <text x="15" y="26" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Own system prompt, hidden info, conversation history</text>
+
+    <rect x="0" y="38" width="340" height="32" rx="4" fill="#3fcf8e" opacity="0.06"/>
+    <text x="15" y="52" fill="#3fcf8e" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Relationship Tracking</text>
+    <text x="15" y="64" fill="#3fcf8e" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Per-character closeness (0–1) + trust (-1 to 1)</text>
+
+    <rect x="0" y="76" width="340" height="32" rx="4" fill="#eab308" opacity="0.06"/>
+    <text x="15" y="90" fill="#eab308" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Spontaneous Reactions</text>
+    <text x="15" y="102" fill="#eab308" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">25% per-message probability of unprompted response</text>
+
+    <rect x="0" y="114" width="340" height="32" rx="4" fill="#a855f7" opacity="0.06"/>
+    <text x="15" y="128" fill="#a855f7" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Strategic Privacy</text>
+    <text x="15" y="140" fill="#a855f7" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Hidden voting rationale, night action reasoning</text>
+
+    <rect x="0" y="152" width="340" height="32" rx="4" fill="#3b82f6" opacity="0.06"/>
+    <text x="15" y="166" fill="#3b82f6" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Dynamic Speaking Order</text>
+    <text x="15" y="178" fill="#3b82f6" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">AI-determined per round via mistral-small</text>
+
+    <rect x="0" y="190" width="340" height="32" rx="4" fill="#06b6d4" opacity="0.06"/>
+    <text x="15" y="204" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Emotion-Driven Voice</text>
+    <text x="15" y="216" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">ElevenLabs v3 tags: [angry] [scared] [excited] [curious]</text>
+
+    <rect x="0" y="228" width="340" height="32" rx="4" fill="#ef4444" opacity="0.06"/>
+    <text x="15" y="242" fill="#ef4444" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Function Calling</text>
+    <text x="15" y="254" fill="#ef4444" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">cast_vote() + night_action() via Mistral tools API</text>
+
+    <rect x="0" y="266" width="340" height="42" rx="4" fill="#c44dff" opacity="0.06"/>
+    <text x="15" y="280" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">7 Cognitive Skills</text>
+    <text x="15" y="292" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Strategic Reasoning · Deception · Memory · Goal-Driven</text>
+    <text x="15" y="304" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Contrastive Examples · Discussion Dynamics · Social Eval</text>
+  </g>
+
+  <!-- Bottom: Emotion flow -->
+  <rect x="430" y="420" width="340" height="55" rx="6" fill="#0d0d18" stroke="#ff6b35" stroke-width="0.5" opacity="0.8"/>
+  <text x="600" y="440" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="600">EMOTION → BEHAVIOR PIPELINE</text>
+  <text x="600" y="458" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">LLM Analysis → 6-Axis State → System Prompt + ElevenLabs Tags + UI Indicators</text>
+  <text x="600" y="470" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">fear:0.8 → [scared] voice · anger:0.7 → [angry] voice · trust:0.2 → [suspicious]</text>
+</svg>

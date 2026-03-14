@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://unpkg.com/@powersync/service-sync-rules@latest/schema/sync_rules.json
+
+config:
+  edition: 3
+
+streams:
+  # Game session metadata - all players in session can see
+  game_session:
+    accept_potentially_dangerous_queries: true
+    query: >
+      SELECT id, session_id, world_title, phase, round, player_count,
+             winner, is_active, tension_level, awaiting_player_night_action,
+             active_skills, created_at, updated_at
+      FROM game_sessions
+      WHERE session_id = subscription.parameters() ->> 'session_id'
+
+  # Public character info - visible to all players in the session
+  public_characters:
+    accept_potentially_dangerous_queries: true
+    query: >
+      SELECT id, session_id, name, public_role, persona, avatar,
+             speaking_style, is_eliminated, is_player,
+             emotional_state, relationships, created_at, updated_at
+      FROM game_characters
+      WHERE session_id = subscription.parameters() ->> 'session_id'
+
+  # Hidden role info - only sync to the player who owns this character
+  my_hidden_role:
+    query: >
+      SELECT id, session_id, faction, hidden_role, win_condition, hidden_knowledge
+      FROM game_characters
+      WHERE session_id = subscription.parameters() ->> 'session_id'
+        AND player_user_id = auth.user_id()
+
+  # Chat messages - public messages for all players
+  game_messages:
+    accept_potentially_dangerous_queries: true
+    query: >
+      SELECT id, session_id, speaker_id, speaker_name, content,
+             phase, round, message_type, dominant_emotion, created_at
+      FROM game_messages
+      WHERE session_id = subscription.parameters() ->> 'session_id'
+        AND is_public = true
+
+  # Vote records - visible after voting phase
+  game_votes:
+    accept_potentially_dangerous_queries: true
+    query: >
+      SELECT id, session_id, round, voter_id, voter_name,
+             target_id, target_name, created_at
+      FROM game_votes
+      WHERE session_id = subscription.parameters() ->> 'session_id'
+
+  # Night action results - only sync to the acting player
+  my_night_actions:
+    query: >
+      SELECT na.id, na.session_id, na.round, na.character_id,
+             na.action_type, na.target_id, na.result, na.created_at
+      FROM game_night_actions na
+      INNER JOIN game_characters gc ON na.character_id = gc.id
+      WHERE na.session_id = subscription.parameters() ->> 'session_id'
+        AND gc.player_user_id = auth.user_id()
