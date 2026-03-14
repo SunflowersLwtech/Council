@@ -21,7 +21,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.0",
-    "three": "~0.175.0"
+    "three": "~0.175.0",
+    "three-mesh-bvh": "^0.9.9"
   },
   "overrides": {
     "react": "$react",

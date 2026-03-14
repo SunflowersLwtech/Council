@@ -356,8 +356,10 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
         setPhase(data.phase === "intro" ? "discussion" : (data.phase as GamePhase));
         setRound(data.round || 1);
         if (data.player_role) setPlayerRole(data.player_role);
-        // Clean URL
+        // Clean URL and show success feedback
         window.history.replaceState({}, "", window.location.pathname);
+        setError("Joined game successfully!");
+        setTimeout(() => setError(null), 3000);
       } catch {
         setError("Failed to join game session");
       } finally {

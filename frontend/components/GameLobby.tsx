@@ -1,6 +1,7 @@
 "use client";
 
-import { Users, Play, MapPin } from "lucide-react";
+import { useState } from "react";
+import { Users, Play, MapPin, Link2, Check } from "lucide-react";
 import { useGameState } from "@/hooks/useGameState";
 import { useI18n } from "@/lib/i18n";
 import CharacterCard from "@/components/CharacterCard";
@@ -8,6 +9,7 @@ import CharacterCard from "@/components/CharacterCard";
 export default function GameLobby() {
   const { t } = useI18n();
   const { session, showHowToPlay, error } = useGameState();
+  const [copied, setCopied] = useState(false);
 
   if (!session) return null;
 
@@ -45,6 +47,36 @@ export default function GameLobby() {
             {session.world_setting}
           </p>
         </div>
+
+        {/* Invite Link */}
+        {session.session_id && (
+          <div className="glass-card p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Link2 size={14} style={{ color: "var(--accent)" }} />
+                <span
+                  className="text-xs font-semibold uppercase tracking-wider"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Invite Players
+                </span>
+              </div>
+              <button
+                className="demo-btn text-xs px-3 py-1.5 flex items-center gap-1.5"
+                onClick={() => {
+                  const url = `${window.location.origin}?session=${session.session_id}`;
+                  navigator.clipboard.writeText(url).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  });
+                }}
+              >
+                {copied ? <Check size={12} /> : <Link2 size={12} />}
+                {copied ? "Copied!" : "Copy Invite Link"}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Characters */}
         <div className="space-y-3">
