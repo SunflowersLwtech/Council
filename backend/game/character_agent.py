@@ -76,9 +76,13 @@ BREAKING_PATTERNS = [
     re.compile(r'as an ai', re.I),
     re.compile(r'language model', re.I),
     re.compile(r"i'm sorry,? but", re.I),
-    re.compile(r'chatgpt|openai|anthropic|mistral ai', re.I),
-    re.compile(r'my (training|programming|instructions)', re.I),
-    re.compile(r'i am an? (ai|artificial|bot|program)', re.I),
+    re.compile(r'chatgpt|openai|anthropic|mistral ai|claude', re.I),
+    re.compile(r'my (training|programming|instructions|guidelines|parameters)', re.I),
+    re.compile(r'i am an? (ai|artificial|bot|program|assistant)', re.I),
+    re.compile(r'i (can\'t|cannot|don\'t) (actually |really )?(have|feel|experience)', re.I),
+    re.compile(r'(system|user) prompt', re.I),
+    re.compile(r'large language model|neural network|token limit', re.I),
+    re.compile(r'i\'m (just |only )?a (virtual|digital|computer)', re.I),
 ]
 
 # Memory bounds
@@ -189,7 +193,7 @@ class CharacterAgent(MistralBaseAgent):
         for name, (low, high) in labels.items():
             val = getattr(st, name)
             label = low if val < 4 else (high if val > 6 else f"{low}/{high}")
-            lines.append(f"# {name}: {val}/10  ({label})")
+            lines.append(f"  {name}: {val}/10 — {label}")
         return "\n".join(lines)
 
     def _build_mind_mirror_jazz(self) -> str:
@@ -198,34 +202,34 @@ class CharacterAgent(MistralBaseAgent):
         for plane_name in ["bio_energy", "emotional", "mental", "social"]:
             plane = getattr(mm, plane_name)
             if plane.traits:
-                lines.append(f"# {plane_name.upper()}:")
+                lines.append(f"  [{plane_name.upper()}]")
                 for trait, val in plane.traits.items():
                     jazz = plane.jazz.get(trait, "")
-                    suffix = f"  # {jazz}" if jazz else ""
-                    lines.append(f"#   {trait}: {val}/7{suffix}")
-        return "\n".join(lines) if lines else "# (default personality)"
+                    suffix = f" — {jazz}" if jazz else ""
+                    lines.append(f"    {trait}: {val}/7{suffix}")
+        return "\n".join(lines) if lines else "  (default personality)"
 
     def _build_relationships_jazz(self) -> str:
         rels = self.character.relationships
         if not rels:
-            return "# No strong feelings about anyone yet."
-        lines = []
+            return "No strong feelings about anyone yet."
+        lines = ["Relationships:"]
         for r in rels:
             word = "trusts" if r.trust > 0.6 else ("distrusts" if r.trust < 0.3 else "unsure about")
-            lines.append(f"# {r.target_name}: {word} (closeness={r.closeness:.1f})")
+            lines.append(f"  {r.target_name}: {word} (closeness={r.closeness:.1f})")
             if r.narrative:
-                lines.append(f"#   {r.narrative}")
+                lines.append(f"    {r.narrative}")
         return "\n".join(lines)
 
     def _build_memories_jazz(self) -> str:
         mems = self.character.recent_memories
         if not mems:
-            return "# No significant memories yet."
-        lines = []
+            return "No significant memories yet."
+        lines = ["Recent memories:"]
         for m in mems[-5:]:
-            lines.append(f"# - {m.event}")
+            lines.append(f"  - {m.event}")
             if m.narrative:
-                lines.append(f"#   {m.narrative}")
+                lines.append(f"    {m.narrative}")
         return "\n".join(lines)
 
     def update_canon_facts(self, facts: list[str]):
@@ -235,10 +239,10 @@ class CharacterAgent(MistralBaseAgent):
 
     def _build_canon_facts_jazz(self) -> str:
         if not self.canon_facts:
-            return "# No established facts yet."
-        lines = ["# ESTABLISHED FACTS (do not contradict):"]
+            return "No established facts yet."
+        lines = ["ESTABLISHED FACTS (do not contradict):"]
         for fact in self.canon_facts:
-            lines.append(f"# - {fact}")
+            lines.append(f"  - {fact}")
         return "\n".join(lines)
 
     def _build_moral_values_line(self) -> str:
@@ -627,7 +631,7 @@ class CharacterAgent(MistralBaseAgent):
         )
 
         messages = [
-            {"role": "system", "content": f"You are the inner mind of {self.character.name}. Think honestly."},
+            {"role": "system", "content": f"You are {self.character.name}, a {self.character.hidden_role}. This is your private inner voice — think honestly."},
             {"role": "user", "content": prompt},
         ]
 
@@ -888,7 +892,7 @@ class CharacterAgent(MistralBaseAgent):
             f"[{m.speaker_name}]: {m.content}" for m in messages[-20:]
         )
 
-        prompt = ROUND_SUMMARY_PROMPT.format(messages=msgs_text)
+        prompt = ROUND_SUMMARY_PROMPT.format(name=self.character.name, messages=msgs_text)
 
         summary_injection = self._get_injection("round_summary")
         if summary_injection:
@@ -920,6 +924,8 @@ class CharacterAgent(MistralBaseAgent):
 
         prompt = SPONTANEOUS_REACTION_PROMPT.format(
             name=c.name,
+            hidden_role=c.hidden_role,
+            faction=c.faction,
             recent_context=recent_context,
         )
 
