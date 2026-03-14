@@ -68,10 +68,26 @@ export function useAuth() {
     }
   }, []);
 
+  const signInWithGoogle = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
     setUser(null);
   }, []);
 
-  return { user, loading, signInAnonymously, signInWithEmail, signUp, signOut };
+  return { user, loading, signInAnonymously, signInWithEmail, signInWithGoogle, signUp, signOut };
 }

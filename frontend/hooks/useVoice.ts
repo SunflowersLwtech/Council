@@ -50,7 +50,6 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
   const [speakingAgentId, setSpeakingAgentId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const scribeRef = useRef<any>(null);
   const webSpeechRef = useRef<any>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ttsQueueRef = useRef<TtsQueueItem[]>([]);
@@ -138,7 +137,7 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
     }
   }, [onTranscript, showError]);
 
-  // ── STT (ElevenLabs Scribe with Web Speech fallback) ───────────────
+  // ── STT (Web Speech API) ─────────────────────────────────────────
 
   const startListening = useCallback(async () => {
     if (status !== "idle") return;
@@ -146,104 +145,15 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
     setPartialTranscript("");
     setErrorMessage(null);
 
-    try {
-      // 1. Try ElevenLabs Scribe first
-      const tokenRes = await fetch("/api/voice/scribe-token", {
-        method: "POST",
-      });
-
-      if (!tokenRes.ok) {
-        throw new Error("Scribe token unavailable");
-      }
-
-      const data = await tokenRes.json();
-      if (!data.token) {
-        throw new Error("No token in response");
-      }
-
-      // 2. Dynamic import to avoid SSR issues
-      const { Scribe, RealtimeEvents } = await import("@elevenlabs/client");
-
-      // 3. Connect
-      const scribe = Scribe.connect({
-        token: data.token,
-        modelId: "scribe_v2_realtime",
-        microphone: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-        },
-      });
-
-      scribeRef.current = scribe;
-
-      scribe.on(RealtimeEvents.OPEN, () => {
-        setStatus("listening");
-      });
-
-      scribe.on(RealtimeEvents.ERROR, (ev: any) => {
-        console.error("Scribe error:", ev);
-        // Close Scribe to release microphone before falling back
-        scribeRef.current = null;
-        try { scribe.close(); } catch {}
-        // Fall back to Web Speech API
-        // Delay to allow microphone release
-        setTimeout(() => {
-          if (!startWebSpeech()) {
-            showError("Voice connection error");
-            setStatus("idle");
-          }
-        }, 500);
-      });
-
-      scribe.on(RealtimeEvents.AUTH_ERROR, (ev: any) => {
-        console.error("Scribe auth error:", ev);
-        scribeRef.current = null;
-        try { scribe.close(); } catch {}
-        // Fall back to Web Speech API
-        setTimeout(() => {
-          if (!startWebSpeech()) {
-            showError("Voice authentication failed");
-            setStatus("idle");
-          }
-        }, 500);
-      });
-
-      scribe.on(RealtimeEvents.PARTIAL_TRANSCRIPT, (ev: any) => {
-        setPartialTranscript(ev.text ?? "");
-      });
-
-      scribe.on(RealtimeEvents.COMMITTED_TRANSCRIPT, (ev: any) => {
-        const final = ev.text?.trim();
-        if (final) {
-          onTranscript(final);
-        }
-      });
-
-      scribe.on(RealtimeEvents.CLOSE, () => {
-        // Don't reset status if we've already fallen back to Web Speech
-        if (!usingWebSpeechRef.current) {
-          setStatus("idle");
-          setPartialTranscript("");
-        }
-        scribeRef.current = null;
-      });
-    } catch (err) {
-      console.warn("ElevenLabs Scribe unavailable, using Web Speech API:", err);
-      scribeRef.current = null;
-
-      // Fall back to Web Speech API
-      if (!startWebSpeech()) {
-        showError("Voice recognition unavailable");
-        setStatus("idle");
-        setPartialTranscript("");
-      }
+    if (!startWebSpeech()) {
+      showError("Voice recognition unavailable");
+      setStatus("idle");
+      setPartialTranscript("");
     }
-  }, [status, onTranscript, showError, startWebSpeech]);
+  }, [status, showError, startWebSpeech]);
 
   const stopListening = useCallback(() => {
-    // Stop Web Speech API if active
-    if (usingWebSpeechRef.current && webSpeechRef.current) {
+    if (webSpeechRef.current) {
       setStatus("processing");
       try {
         webSpeechRef.current.stop();
@@ -253,27 +163,6 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
       usingWebSpeechRef.current = false;
       webSpeechRef.current = null;
       setTimeout(() => setStatus("idle"), 300);
-      return;
-    }
-
-    // Stop ElevenLabs Scribe
-    const scribe = scribeRef.current;
-    if (!scribe) return;
-    setStatus("processing");
-
-    try {
-      scribe.commit();
-      setTimeout(() => {
-        try {
-          scribe.close();
-        } catch {
-          // already closed
-        }
-      }, 300);
-    } catch {
-      setStatus("idle");
-      setPartialTranscript("");
-      scribeRef.current = null;
     }
   }, []);
 

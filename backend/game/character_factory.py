@@ -15,7 +15,7 @@ from backend.game.prompts import CHARACTER_GENERATION_SYSTEM, CHARACTER_GENERATI
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-VOICE_POOL = ["Sarah", "George", "Charlie", "Alice", "Harry", "Jessica", "Brian", "Lily"]
+VOICE_POOL = ["Kore", "Puck", "Charon", "Aoede", "Leda", "Orus", "Zephyr", "Fenrir"]
 
 # Timeout for Mistral API calls (seconds).
 # Character generation with detailed traits (big five, MBTI, sims, mind mirror)

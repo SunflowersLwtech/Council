@@ -65,23 +65,6 @@ class TTSRequest(BaseModel):
     agent_id: str = "orchestrator"
 
 
-@app.post("/api/voice/scribe-token")
-async def scribe_token():
-    """Get a single-use token for ElevenLabs Scribe real-time STT."""
-    api_key = os.environ.get("ELEVENLABS_API_KEY")
-    if not api_key:
-        return JSONResponse(status_code=500, content={"error": "ELEVENLABS_API_KEY not configured"})
-
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            "https://api.elevenlabs.io/v1/single-use-token/realtime_scribe",
-            headers={"xi-api-key": api_key},
-        )
-    if resp.status_code != 200:
-        return JSONResponse(status_code=resp.status_code, content={"error": "Failed to get scribe token"})
-    return resp.json()
-
-
 @app.post("/api/voice/tts")
 async def voice_tts(request: TTSRequest):
     """Generate TTS audio for an agent response."""
@@ -93,7 +76,7 @@ async def voice_tts(request: TTSRequest):
 
     audio = await voice.text_to_speech(request.text, request.agent_id)
     if audio:
-        return Response(content=audio, media_type="audio/mpeg")
+        return Response(content=audio, media_type="audio/wav")
     return JSONResponse(
         status_code=502,
         content={"error": "TTS generation failed"},
@@ -308,12 +291,12 @@ async def game_night(session_id: str):
 
 class TTSStreamRequest(BaseModel):
     text: str
-    voice_id: str = "Sarah"
+    voice_id: str = "Kore"
 
 
 @app.post("/api/voice/tts/stream")
 async def voice_tts_stream(request: TTSStreamRequest):
-    """Stream TTS audio as chunks."""
+    """Stream TTS audio as WAV chunks."""
     if not voice or not voice.available:
         return JSONResponse(
             status_code=503,
@@ -328,13 +311,13 @@ async def voice_tts_stream(request: TTSStreamRequest):
             logger.warning("TTS stream error: %s", e)
             return
 
-    return StreamingResponse(audio_stream(), media_type="audio/mpeg")
+    return StreamingResponse(audio_stream(), media_type="audio/wav")
 
 
 @app.get("/api/voice/tts/stream")
 async def voice_tts_stream_get(
     text: str = Query(..., min_length=1),
-    voice_id: str = Query("Sarah"),
+    voice_id: str = Query("Kore"),
 ):
     """Stream TTS audio via query params (browser <audio> friendly)."""
     if not voice or not voice.available:
@@ -352,30 +335,7 @@ async def voice_tts_stream_get(
             return
 
     headers = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no", "Connection": "keep-alive"}
-    return StreamingResponse(audio_stream(), media_type="audio/mpeg", headers=headers)
-
-
-class SFXRequest(BaseModel):
-    prompt: str
-    duration_seconds: float = 3.0
-
-
-@app.post("/api/voice/sfx")
-async def generate_sfx(request: SFXRequest):
-    """Generate sound effects using ElevenLabs SFX API."""
-    if not voice or not voice.available:
-        return JSONResponse(
-            status_code=503,
-            content={"error": "Voice not available"},
-        )
-
-    audio = await voice.generate_sfx(request.prompt, request.duration_seconds)
-    if audio:
-        return Response(content=audio, media_type="audio/mpeg")
-    return JSONResponse(
-        status_code=502,
-        content={"error": "SFX generation failed"},
-    )
+    return StreamingResponse(audio_stream(), media_type="audio/wav", headers=headers)
 
 
 @app.get("/api/game/{session_id}/player-role")
