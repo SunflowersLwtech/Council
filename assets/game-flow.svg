@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a14"/>
+      <stop offset="100%" stop-color="#0f0f20"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="boxShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b35"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="35" text-anchor="middle" fill="white" font-family="'Playfair Display',Georgia,serif" font-size="20" font-weight="700" letter-spacing="4">GAME FLOW</text>
+
+  <!-- Phase boxes -->
+  <!-- 1. Upload -->
+  <rect x="30" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3b82f6" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="95" y="90" text-anchor="middle" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">UPLOAD</text>
+  <text x="95" y="108" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">PDF / Text / Scenario</text>
+  <text x="95" y="122" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Mistral OCR</text>
+  <text x="95" y="136" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">→ WorldModel</text>
+  <text x="95" y="165" text-anchor="middle" fill="#3b82f6" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">document_engine</text>
+
+  <line x1="162" y1="120" x2="182" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 2. Generate -->
+  <rect x="190" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#a855f7" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="255" y="90" text-anchor="middle" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">GENERATE</text>
+  <text x="255" y="108" text-anchor="middle" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">5-8 AI Characters</text>
+  <text x="255" y="122" text-anchor="middle" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Big Five + MBTI</text>
+  <text x="255" y="136" text-anchor="middle" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Sims + Mind Mirror</text>
+  <text x="255" y="165" text-anchor="middle" fill="#a855f7" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">character_factory</text>
+
+  <line x1="322" y1="120" x2="342" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 3. Lobby -->
+  <rect x="350" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3fcf8e" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="415" y="90" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">LOBBY</text>
+  <text x="415" y="108" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Review Characters</text>
+  <text x="415" y="122" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Role Assignment</text>
+  <text x="415" y="136" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Join Session</text>
+  <text x="415" y="165" text-anchor="middle" fill="#3fcf8e" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">PowerSync connect</text>
+
+  <line x1="482" y1="120" x2="502" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 4. Discussion -->
+  <rect x="510" y="65" width="150" height="110" rx="6" fill="#1a1a3a" stroke="#ff6b35" stroke-width="1.5" filter="url(#boxShadow)"/>
+  <text x="585" y="90" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">DISCUSSION</text>
+  <text x="585" y="108" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">SSE Streaming Chat</text>
+  <text x="585" y="122" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">25% Spontaneous Reactions</text>
+  <text x="585" y="136" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Tension + Complications</text>
+  <text x="585" y="165" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">orchestrator + agents</text>
+
+  <line x1="662" y1="120" x2="682" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 5. Voting -->
+  <rect x="690" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#eab308" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="755" y="90" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">VOTING</text>
+  <text x="755" y="108" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Parallel AI Votes</text>
+  <text x="755" y="122" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Staggered Reveal</text>
+  <text x="755" y="136" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Tie → Master Ruling</text>
+  <text x="755" y="165" text-anchor="middle" fill="#eab308" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">function calling</text>
+
+  <line x1="822" y1="120" x2="842" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 6. Reveal -->
+  <rect x="850" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#ef4444" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="915" y="90" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">REVEAL</text>
+  <text x="915" y="108" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Hidden Role Exposed</text>
+  <text x="915" y="122" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Last Words (AI)</text>
+  <text x="915" y="136" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Win Check</text>
+  <text x="915" y="165" text-anchor="middle" fill="#ef4444" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">progressive disclosure</text>
+
+  <line x1="982" y1="120" x2="1002" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- 7. Night -->
+  <rect x="1010" y="65" width="160" height="110" rx="6" fill="#1a1a3a" stroke="#6366f1" stroke-width="1" filter="url(#boxShadow)"/>
+  <text x="1090" y="90" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">NIGHT</text>
+  <text x="1090" y="108" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Kill / Investigate / Protect</text>
+  <text x="1090" y="122" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Save / Poison</text>
+  <text x="1090" y="136" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Conflict Resolution</text>
+  <text x="1090" y="165" text-anchor="middle" fill="#6366f1" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">function calling</text>
+
+  <!-- Loop arrow from Night back to Discussion -->
+  <path d="M1090,177 L1090,230 Q1090,250 1070,250 L600,250 Q580,250 580,235 L580,180" fill="none" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.4" stroke-dasharray="4,3"/>
+  <text x="840" y="245" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.5">Loop until faction wins (max 6 rounds)</text>
+
+  <!-- PowerSync sync indicator -->
+  <rect x="30" y="270" width="1140" height="35" rx="6" fill="#c44dff" opacity="0.04" stroke="#c44dff" stroke-width="0.5" opacity="0.2"/>
+  <text x="600" y="293" text-anchor="middle" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.5">PowerSync continuously syncs all game state changes to every connected client's local SQLite database</text>
+</svg>

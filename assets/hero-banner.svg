@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a14"/>
+      <stop offset="100%" stop-color="#12122a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6b35"/>
+      <stop offset="100%" stop-color="#ff8f5e"/>
+    </linearGradient>
+    <linearGradient id="psGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c44dff"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="tableGlow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.15"/>
+      <stop offset="70%" stop-color="#ff6b35" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="psGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#c44dff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#c44dff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="bigGlow">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.04" stroke="#c8c8e0">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="1000" y1="0" x2="1000" y2="400"/>
+  </g>
+
+  <!-- Center glow -->
+  <ellipse cx="600" cy="200" rx="400" ry="200" fill="url(#centerGlow)"/>
+  <ellipse cx="600" cy="200" rx="250" ry="120" fill="url(#centerGlow)" filter="url(#bigGlow)"/>
+
+  <!-- Constellation dots -->
+  <g fill="#c8c8e0" opacity="0.15">
+    <circle cx="80" cy="60" r="1.2"/><circle cx="150" cy="90" r="0.8"/>
+    <circle cx="220" cy="45" r="1"/><circle cx="310" cy="75" r="0.6"/>
+    <circle cx="900" cy="50" r="1"/><circle cx="980" cy="80" r="0.8"/>
+    <circle cx="1050" cy="40" r="1.2"/><circle cx="1120" cy="70" r="0.6"/>
+    <circle cx="100" cy="340" r="0.8"/><circle cx="180" cy="360" r="1"/>
+    <circle cx="1020" cy="330" r="1"/><circle cx="1100" cy="355" r="0.8"/>
+  </g>
+  <g stroke="#c8c8e0" stroke-width="0.3" opacity="0.08">
+    <line x1="80" y1="60" x2="150" y2="90"/>
+    <line x1="150" y1="90" x2="220" y2="45"/>
+    <line x1="900" y1="50" x2="980" y2="80"/>
+    <line x1="980" y1="80" x2="1050" y2="40"/>
+    <line x1="1050" y1="40" x2="1120" y2="70"/>
+  </g>
+
+  <!-- Round table (ellipse) -->
+  <ellipse cx="600" cy="235" rx="140" ry="50" fill="none" stroke="#ff6b35" stroke-width="1.5" opacity="0.4" filter="url(#glow)"/>
+  <ellipse cx="600" cy="235" rx="140" ry="50" fill="none" stroke="#ff6b35" stroke-width="0.5" opacity="0.15" filter="url(#bigGlow)"/>
+
+  <!-- Agents around table -->
+  <!-- Agent 1 (top - player, orange) -->
+  <g transform="translate(600, 168)">
+    <circle r="14" fill="#ff6b35" opacity="0.2" filter="url(#glow)"/>
+    <circle r="8" fill="#ff6b35" opacity="0.9"/>
+    <circle r="4" cy="-12" fill="#ff6b35" opacity="0.7"/>
+    <text y="-22" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="8" font-weight="600" opacity="0.8">YOU</text>
+  </g>
+
+  <!-- Agent 2 (top-right) -->
+  <g transform="translate(710, 195)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 3 (right) -->
+  <g transform="translate(740, 235)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 4 (bottom-right) -->
+  <g transform="translate(710, 275)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 5 (bottom) -->
+  <g transform="translate(600, 298)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 6 (bottom-left) -->
+  <g transform="translate(490, 275)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 7 (left) -->
+  <g transform="translate(460, 235)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+  <!-- Agent 8 (top-left) -->
+  <g transform="translate(490, 195)">
+    <circle r="7" fill="#c8c8e0" opacity="0.6"/>
+    <circle r="3.5" cy="-10" fill="#c8c8e0" opacity="0.5"/>
+  </g>
+
+  <!-- Subtle connection lines between agents -->
+  <g stroke="#ff6b35" stroke-width="0.3" opacity="0.12">
+    <line x1="600" y1="168" x2="710" y2="195"/>
+    <line x1="710" y1="195" x2="740" y2="235"/>
+    <line x1="740" y1="235" x2="710" y2="275"/>
+    <line x1="710" y1="275" x2="600" y2="298"/>
+    <line x1="600" y1="298" x2="490" y2="275"/>
+    <line x1="490" y1="275" x2="460" y2="235"/>
+    <line x1="460" y1="235" x2="490" y2="195"/>
+    <line x1="490" y1="195" x2="600" y2="168"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="85" text-anchor="middle" fill="white" font-family="'Playfair Display',Georgia,serif" font-size="56" font-weight="700" letter-spacing="12">COUNCIL</text>
+
+  <!-- PowerSync badge -->
+  <rect x="480" y="100" width="240" height="24" rx="12" fill="url(#psGrad)" opacity="0.2"/>
+  <text x="600" y="117" text-anchor="middle" fill="#c8a0ff" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" letter-spacing="3">POWERED BY POWERSYNC</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="340" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="300" letter-spacing="1" opacity="0.7">Multi-Agent AI Social Deduction  ·  Local-First Real-Time Sync  ·  3D Immersive Experience</text>
+
+  <!-- Decorative corner brackets -->
+  <g stroke="#ff6b35" stroke-width="1" opacity="0.2">
+    <path d="M20,20 L20,50 M20,20 L50,20"/>
+    <path d="M1180,20 L1180,50 M1180,20 L1150,20"/>
+    <path d="M20,380 L20,350 M20,380 L50,380"/>
+    <path d="M1180,380 L1180,350 M1180,380 L1150,380"/>
+  </g>
+
+  <!-- Side labels -->
+  <text x="30" y="205" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="8" font-weight="400" opacity="0.4" letter-spacing="2" transform="rotate(-90, 30, 205)">REAL-TIME SYNC</text>
+  <text x="1170" y="205" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="8" font-weight="400" opacity="0.4" letter-spacing="2" transform="rotate(90, 1170, 205)">LOCAL-FIRST</text>
+</svg>
