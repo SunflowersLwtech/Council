@@ -264,7 +264,7 @@ class CharacterAgent(MistralBaseAgent):
                 self._apply_llm_emotion_analysis(analysis, speaker_id)
                 return
         except asyncio.TimeoutError:
-            pass
+            logger.debug("Emotion LLM timed out for %s, falling back to keywords", self.character.name)
         except Exception as e:
             logger.warning("Emotion analysis failed for %s: %s", self.character.name, e)
         # Fallback to keyword matching
@@ -672,7 +672,7 @@ class CharacterAgent(MistralBaseAgent):
         try:
             async with asyncio.timeout(15.0):
                 result = await self._mistral.chat.complete_async(
-                    model=self._model,
+                    model=self.model_name,
                     messages=messages,
                     max_tokens=200,
                     temperature=0.8,
@@ -904,10 +904,12 @@ class CharacterAgent(MistralBaseAgent):
         ]
 
         try:
-            summary = await self.call_mistral(llm_messages)
+            summary = await asyncio.wait_for(
+                self.call_mistral(llm_messages), timeout=10.0
+            )
             self._round_memory.append(summary)
             return summary
-        except Exception:
+        except (asyncio.TimeoutError, Exception):
             fallback = f"Round discussion with {len(messages)} messages."
             self._round_memory.append(fallback)
             return fallback
