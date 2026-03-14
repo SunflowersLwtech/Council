@@ -893,6 +893,9 @@ class GameMaster:
             flavor_text=state.world.flavor_text,
         )
 
+        if state.language:
+            system += f"\nIMPORTANT: Generate all narration in {state.language}."
+
         if self._narration_injection:
             system += "\n\n" + self._narration_injection
 

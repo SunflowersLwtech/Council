@@ -134,18 +134,20 @@ export async function getGameScenarios(): Promise<ScenarioInfo[]> {
   return data.scenarios || data;
 }
 
-export async function createGameFromDocument(file: File): Promise<GameSession> {
+export async function createGameFromDocument(file: File, language?: string): Promise<GameSession> {
   const formData = new FormData();
   formData.append("file", file);
+  if (language) formData.append("language", language);
   const headers = await authHeaders();
   const res = await fetch(`${API_BASE}/api/game/create`, { method: "POST", headers, body: formData });
   if (!res.ok) throw new Error(`Failed to create game: ${res.status} ${res.statusText}`);
   return res.json();
 }
 
-export async function createGameFromText(text: string): Promise<GameSession> {
+export async function createGameFromText(text: string, language?: string): Promise<GameSession> {
   const formData = new FormData();
   formData.append("text", text);
+  if (language) formData.append("language", language);
   const headers = await authHeaders();
   const res = await fetch(`${API_BASE}/api/game/create`, {
     method: "POST",

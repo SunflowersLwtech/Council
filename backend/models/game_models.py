@@ -338,6 +338,8 @@ class GameState(BaseModel):
     canon_facts: list[str] = Field(default_factory=list)
     # Active skill IDs for this game session
     active_skills: list[str] = Field(default_factory=list)
+    # Player language preference (e.g. "中文", "English", "日本語")
+    language: str | None = None
     # Player hidden role
     player_role: PlayerRole | None = None
     # Night phase: waiting for player action before resolving

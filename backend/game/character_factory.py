@@ -37,7 +37,8 @@ class CharacterFactory:
         pass  # No longer reuse a single Mistral client
 
     async def generate_characters(
-        self, world: WorldModel, num_characters: int = 7
+        self, world: WorldModel, num_characters: int = 7,
+        language: str | None = None,
     ) -> list[Character]:
         """Generate characters from a WorldModel via a single Mistral call."""
         num_characters = max(3, min(num_characters, 8))
@@ -55,6 +56,10 @@ class CharacterFactory:
             win_conditions=win_str,
             num_characters=num_characters,
         )
+
+        # Inject language preference — appended to user prompt, not modifying system prompt
+        if language:
+            user += f"\n\nIMPORTANT: Generate all character names, personas, speaking styles, and narrative content in {language}."
 
         def _sync_generate():
             """Run Mistral call in a thread to avoid uvicorn event loop issues."""

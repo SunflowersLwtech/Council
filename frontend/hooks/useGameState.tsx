@@ -82,8 +82,8 @@ interface GameStateCtx {
   }>;
   aiThoughts: AIThought[];
   // Actions
-  uploadDocument: (file: File) => Promise<void>;
-  uploadText: (text: string) => Promise<void>;
+  uploadDocument: (file: File, language?: string) => Promise<void>;
+  uploadText: (text: string, language?: string) => Promise<void>;
   loadScenario: (id: string) => Promise<void>;
   startGame: () => Promise<void>;
   showHowToPlay: () => void;
@@ -1004,12 +1004,12 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
     }
   }, [clearDeltaBuffers]);
 
-  const uploadDocument = useCallback(async (file: File) => {
+  const uploadDocument = useCallback(async (file: File, language?: string) => {
     setPhase("parsing");
     setParseProgress("Analyzing document...");
     setError(null);
     try {
-      const sess = await api.createGameFromDocument(file);
+      const sess = await api.createGameFromDocument(file, language);
       handleSessionCreated(sess);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
@@ -1017,12 +1017,12 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
     }
   }, [handleSessionCreated]);
 
-  const uploadText = useCallback(async (text: string) => {
+  const uploadText = useCallback(async (text: string, language?: string) => {
     setPhase("parsing");
     setParseProgress("Generating characters...");
     setError(null);
     try {
-      const sess = await api.createGameFromText(text);
+      const sess = await api.createGameFromText(text, language);
       handleSessionCreated(sess);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Creation failed");

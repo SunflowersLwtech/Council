@@ -241,19 +241,19 @@ class GameOrchestrator:
 
     async def create_session_from_file(
         self, file_bytes: bytes, filename: str, num_characters: int | None = None,
-        enabled_skills: list[str] | None = None,
+        enabled_skills: list[str] | None = None, language: str | None = None,
     ) -> GameCreateResponse:
         """Create a game from an uploaded document."""
         world = await self.doc_engine.process_document(file_bytes, filename)
-        return await self._finalize_session(world, num_characters, enabled_skills)
+        return await self._finalize_session(world, num_characters, enabled_skills, language)
 
     async def create_session_from_text(
         self, text: str, num_characters: int | None = None,
-        enabled_skills: list[str] | None = None,
+        enabled_skills: list[str] | None = None, language: str | None = None,
     ) -> GameCreateResponse:
         """Create a game from raw text."""
         world = await self.doc_engine.process_text(text)
-        return await self._finalize_session(world, num_characters, enabled_skills)
+        return await self._finalize_session(world, num_characters, enabled_skills, language)
 
     async def create_session_from_scenario(
         self, scenario_id: str, num_characters: int | None = None,
@@ -266,10 +266,11 @@ class GameOrchestrator:
     async def _finalize_session(
         self, world, num_characters: int | None = None,
         enabled_skills: list[str] | None = None,
+        language: str | None = None,
     ) -> GameCreateResponse:
         """Generate characters, create agents, store session."""
         count = num_characters if num_characters is not None else world.recommended_player_count
-        characters = await self.char_factory.generate_characters(world, count)
+        characters = await self.char_factory.generate_characters(world, count, language=language)
 
         # Resolve skills — use all available skills by default
         skill_ids = enabled_skills if enabled_skills is not None else self.skill_loader.all_skill_ids()
@@ -283,6 +284,7 @@ class GameOrchestrator:
             world=world,
             characters=characters,
             active_skills=[s.id for s in active_skills],
+            language=language,
         )
 
         # Establish canon facts from world setup
@@ -297,6 +299,8 @@ class GameOrchestrator:
         player_role = self._assign_player_role(state, world, characters)
         state.player_role = player_role
         state.canon_facts.append("You (the player) are publicly known as a Council Member")
+        if language:
+            state.canon_facts.append(f"LANGUAGE: All dialogue and narration must be in {language}")
 
         self._sessions[state.session_id] = state
 
