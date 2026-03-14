@@ -33,16 +33,18 @@
       <stop offset="0%" stop-color="#c44dff" stop-opacity="0.08"/>
       <stop offset="100%" stop-color="#c44dff" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="8"/>
-    </filter>
-    <filter id="logoShadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#ff6b35" flood-opacity="0.25"/>
-    </filter>
+    <linearGradient id="heroPsGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/>
+      <stop offset="1" stop-color="#00d5ff"/>
+    </linearGradient>
+    <linearGradient id="heroPsGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/>
+      <stop offset="1" stop-color="#a0f"/>
+    </linearGradient>
+    <linearGradient id="heroSupaGrad1" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#249361"/>
+      <stop offset="1" stop-color="#3ECF8E"/>
+    </linearGradient>
   </defs>
 
   <!-- Background -->
@@ -83,7 +85,7 @@
   </g>
 
   <!-- ============ COUNCIL LOGO (C with dots) ============ -->
-  <g transform="translate(510, 110) scale(0.58)" filter="url(#logoShadow)">
+  <g transform="translate(510, 110) scale(0.58)">
     <!-- Orange C shape -->
     <path d="M155 0A140 140 0 1 0 155 280h0a24 24 0 0 0 0-48h0a92 92 0 1 1 0-184h0a24 24 0 0 0 0-48Z" fill="url(#cGrad)"/>
     <!-- Council dots -->
@@ -99,27 +101,12 @@
   </g>
 
   <!-- ============ TITLE ============ -->
-  <text x="600" y="300" text-anchor="middle" fill="white" font-family="'Playfair Display',Georgia,serif" font-size="60" font-weight="700" letter-spacing="14">COUNCIL</text>
+  <text x="600" y="300" text-anchor="middle" fill="white" font-family="Georgia,'Times New Roman',serif" font-size="60" font-weight="700" letter-spacing="14">COUNCIL</text>
 
   <!-- Subtitle tagline -->
-  <text x="600" y="330" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="300" letter-spacing="1.5" opacity="0.7">Multi-Agent AI Social Deduction  ·  Local-First Real-Time Sync  ·  3D Immersive Experience</text>
+  <text x="600" y="330" text-anchor="middle" fill="#c8c8e0" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="300" letter-spacing="1.5" opacity="0.7">Multi-Agent AI Social Deduction  ·  Local-First Real-Time Sync  ·  3D Immersive Experience</text>
 
   <!-- ============ TECH PARTNER LOGOS ROW ============ -->
-  <!-- PowerSync gradients -->
-  <linearGradient id="heroPsGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
-    <stop offset="0" stop-color="#05f"/>
-    <stop offset="1" stop-color="#00d5ff"/>
-  </linearGradient>
-  <linearGradient id="heroPsGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
-    <stop offset="0" stop-color="#05f"/>
-    <stop offset="1" stop-color="#a0f"/>
-  </linearGradient>
-  <!-- Supabase gradients -->
-  <linearGradient id="heroSupaGrad1" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
-    <stop stop-color="#249361"/>
-    <stop offset="1" stop-color="#3ECF8E"/>
-  </linearGradient>
-
   <g transform="translate(600, 380)">
     <!-- Divider line -->
     <line x1="-300" y1="-20" x2="300" y2="-20" stroke="#2a2a4a" stroke-width="0.5" opacity="0.6"/>
@@ -138,7 +125,7 @@
         <rect y="22" width="17.5" height="5.5" fill="#E10500"/>
         <rect x="11.5" y="22" width="17.5" height="5.5" fill="#E10500"/>
       </g>
-      <text x="14" y="5" fill="#ffbd59" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" opacity="0.8">Mistral AI</text>
+      <text x="14" y="5" fill="#ffbd59" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" opacity="0.8">Mistral AI</text>
     </g>
 
     <!-- PowerSync (official interlocking arrows) -->
@@ -147,16 +134,18 @@
         <path fill="url(#heroPsGrad1)" d="M373.25,140.55l-44.88-77.73c-5.53-9.57-15.74-15.47-26.8-15.47h-46.24c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h20.21c7.37,0,14.18,3.93,17.86,10.32l33.35,57.76c3.69,6.38,3.69,14.25,0,20.63l-33.35,57.76c-3.68,6.38-10.49,10.32-17.87,10.32h-66.7c-7.37,0-14.18-3.93-17.87-10.32l-72.13-124.94c-1.99-3.44.5-7.74,4.47-7.74h20.21c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39c-1.84-3.19-5.25-5.16-8.93-5.16h-43.64c-3.69,0-7.09,1.97-8.93,5.16l-21.82,37.8c-1.84,3.19-1.84,7.12,0,10.31l10.04,17.39c1.99,3.44,6.95,3.44,8.93,0l10.1-17.5c1.98-3.44,6.95-3.44,8.93,0l77.9,134.93c5.53,9.57,15.74,15.47,26.8,15.47h89.75c11.06,0,21.27-5.9,26.8-15.47l44.88-77.73c5.53-9.57,5.53-21.37,0-30.94Z"/>
         <path fill="url(#heroPsGrad2)" d="M117.49,192.8c-1.84-3.19-5.25-5.16-8.93-5.16h-20.21c-7.37,0-14.18-3.93-17.86-10.32l-33.35-57.76c-3.69-6.38-3.69-14.25,0-20.63l33.35-57.76c3.69-6.38,10.5-10.32,17.87-10.31h66.7c7.37,0,14.18,3.93,17.86,10.32l72.13,124.94c1.99,3.44-.5,7.74-4.47,7.74h-20.21c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h43.64c3.69,0,7.09-1.97,8.93-5.16l21.82-37.8c1.84-3.19,1.84-7.12,0-10.31l-10.04-17.39c-1.98-3.44-6.95-3.44-8.93,0l-10.1,17.5c-1.99,3.44-6.95,3.44-8.93,0L193.37,16.05c-5.53-9.57-15.74-15.47-26.8-15.47h-89.75c-11.06,0-21.27,5.9-26.8,15.47L5.15,93.78c-5.53,9.57-5.53,21.37,0,30.94l44.88,77.73c5.53,9.57,15.74,15.47,26.8,15.47h46.24c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39Z"/>
       </g>
-      <text x="10" y="5" fill="#7cb3ff" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" opacity="0.8">PowerSync</text>
+      <text x="10" y="5" fill="#7cb3ff" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" opacity="0.8">PowerSync</text>
     </g>
 
-    <!-- ElevenLabs (official "11" mark) -->
+    <!-- Gemini TTS (Google 4-color dots) -->
     <g transform="translate(90, 0)">
-      <g transform="translate(-14, -10)">
-        <rect width="5" height="20" rx="0.5" fill="white" opacity="0.75"/>
-        <rect x="9" width="5" height="20" rx="0.5" fill="white" opacity="0.75"/>
+      <g transform="translate(-12, -8)">
+        <circle cx="3.5" cy="3.5" r="3.5" fill="#4285F4"/>
+        <circle cx="12.5" cy="3.5" r="3.5" fill="#EA4335"/>
+        <circle cx="3.5" cy="12.5" r="3.5" fill="#34A853"/>
+        <circle cx="12.5" cy="12.5" r="3.5" fill="#FBBC05"/>
       </g>
-      <text x="6" y="5" fill="white" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" opacity="0.7">ElevenLabs</text>
+      <text x="8" y="5" fill="#8ab4f8" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" opacity="0.8">Gemini TTS</text>
     </g>
 
     <!-- Supabase (official lightning bolt) -->
@@ -165,7 +154,7 @@
         <path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#heroSupaGrad1)"/>
         <path d="M45.317 2.07103C48.1765 -1.53037 53.9745 0.442937 54.0434 5.041L54.4849 72.2922H9.83113C1.64038 72.2922 -2.92775 62.8321 2.1655 56.4175L45.317 2.07103Z" fill="#3ECF8E"/>
       </g>
-      <text x="12" y="5" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" opacity="0.8">Supabase</text>
+      <text x="12" y="5" fill="#86efac" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" opacity="0.8">Supabase</text>
     </g>
   </g>
 
@@ -178,6 +167,6 @@
   </g>
 
   <!-- Side labels -->
-  <text x="30" y="220" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="8" font-weight="400" opacity="0.3" letter-spacing="2" transform="rotate(-90, 30, 220)">REAL-TIME SYNC</text>
-  <text x="1170" y="220" fill="#c44dff" font-family="Inter,system-ui,sans-serif" font-size="8" font-weight="400" opacity="0.3" letter-spacing="2" transform="rotate(90, 1170, 220)">LOCAL-FIRST</text>
+  <text x="30" y="220" fill="#ff6b35" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="8" font-weight="400" opacity="0.3" letter-spacing="2" transform="rotate(-90, 30, 220)">REAL-TIME SYNC</text>
+  <text x="1170" y="220" fill="#c44dff" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="8" font-weight="400" opacity="0.3" letter-spacing="2" transform="rotate(90, 1170, 220)">LOCAL-FIRST</text>
 </svg>

@@ -32,13 +32,15 @@
       <stop offset="0%" stop-color="#3fcf8e"/>
       <stop offset="100%" stop-color="#2db87a"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="boxShadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
+    <linearGradient id="archPsGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#00d5ff"/>
+    </linearGradient>
+    <linearGradient id="archPsGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#a0f"/>
+    </linearGradient>
+    <linearGradient id="archSupaGrad" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#249361"/><stop offset="1" stop-color="#3ECF8E"/>
+    </linearGradient>
     <marker id="arrowHead" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
       <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b35"/>
     </marker>
@@ -58,7 +60,7 @@
   <line x1="450" y1="50" x2="750" y2="50" stroke="#ff6b35" stroke-width="1" opacity="0.3"/>
 
   <!-- ==================== FRONTEND SECTION ==================== -->
-  <rect x="30" y="70" width="550" height="260" rx="8" fill="url(#frontendGrad)" stroke="#3b82f6" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
+  <rect x="30" y="70" width="550" height="260" rx="8" fill="url(#frontendGrad)" stroke="#3b82f6" stroke-width="1" opacity="0.8"/>
   <!-- Next.js icon -->
   <circle cx="52" cy="90" r="8" fill="white" opacity="0.15"/>
   <text x="52" y="94" text-anchor="middle" fill="white" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="800" opacity="0.6">N</text>
@@ -102,18 +104,12 @@
   <!-- Voice box -->
   <rect x="450" y="205" width="110" height="65" rx="6" fill="#1a1a3a" stroke="#3b82f6" stroke-width="0.5" opacity="0.7"/>
   <text x="505" y="228" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Voice</text>
-  <text x="505" y="244" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">ElevenLabs TTS</text>
-  <text x="505" y="258" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Scribe STT</text>
+  <text x="505" y="244" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Gemini 2.5 Flash TTS</text>
+  <text x="505" y="258" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">WAV 24kHz PCM</text>
 
   <!-- ==================== POWERSYNC CLOUD ==================== -->
-  <rect x="30" y="360" width="310" height="100" rx="8" fill="url(#syncGrad)" stroke="#c44dff" stroke-width="1.2" opacity="0.9" filter="url(#boxShadow)"/>
+  <rect x="30" y="360" width="310" height="100" rx="8" fill="url(#syncGrad)" stroke="#c44dff" stroke-width="1.2" opacity="0.9"/>
   <!-- PowerSync official icon -->
-  <linearGradient id="archPsGrad1" x1="0" y1="0" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
-    <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#00d5ff"/>
-  </linearGradient>
-  <linearGradient id="archPsGrad2" x1="1" y1="1" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
-    <stop offset="0" stop-color="#05f"/><stop offset="1" stop-color="#a0f"/>
-  </linearGradient>
   <g transform="translate(36, 375) scale(0.055)">
     <path fill="url(#archPsGrad1)" d="M373.25,140.55l-44.88-77.73c-5.53-9.57-15.74-15.47-26.8-15.47h-46.24c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h20.21c7.37,0,14.18,3.93,17.86,10.32l33.35,57.76c3.69,6.38,3.69,14.25,0,20.63l-33.35,57.76c-3.68,6.38-10.49,10.32-17.87,10.32h-66.7c-7.37,0-14.18-3.93-17.87-10.32l-72.13-124.94c-1.99-3.44.5-7.74,4.47-7.74h20.21c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39c-1.84-3.19-5.25-5.16-8.93-5.16h-43.64c-3.69,0-7.09,1.97-8.93,5.16l-21.82,37.8c-1.84,3.19-1.84,7.12,0,10.31l10.04,17.39c1.99,3.44,6.95,3.44,8.93,0l10.1-17.5c1.98-3.44,6.95-3.44,8.93,0l77.9,134.93c5.53,9.57,15.74,15.47,26.8,15.47h89.75c11.06,0,21.27-5.9,26.8-15.47l44.88-77.73c5.53-9.57,5.53-21.37,0-30.94Z"/>
     <path fill="url(#archPsGrad2)" d="M117.49,192.8c-1.84-3.19-5.25-5.16-8.93-5.16h-20.21c-7.37,0-14.18-3.93-17.86-10.32l-33.35-57.76c-3.69-6.38-3.69-14.25,0-20.63l33.35-57.76c3.69-6.38,10.5-10.32,17.87-10.31h66.7c7.37,0,14.18,3.93,17.86,10.32l72.13,124.94c1.99,3.44-.5,7.74-4.47,7.74h-20.21c-3.97,0-6.45,4.3-4.47,7.74l10.04,17.39c1.84,3.19,5.25,5.16,8.93,5.16h43.64c3.69,0,7.09-1.97,8.93-5.16l21.82-37.8c1.84-3.19,1.84-7.12,0-10.31l-10.04-17.39c-1.98-3.44-6.95-3.44-8.93,0l-10.1,17.5c-1.99,3.44-6.95,3.44-8.93,0L193.37,16.05c-5.53-9.57-15.74-15.47-26.8-15.47h-89.75c-11.06,0-21.27,5.9-26.8,15.47L5.15,93.78c-5.53,9.57-5.53,21.37,0,30.94l44.88,77.73c5.53,9.57,15.74,15.47,26.8,15.47h46.24c3.97,0,6.45-4.3,4.47-7.74l-10.04-17.39Z"/>
@@ -124,7 +120,7 @@
   <text x="50" y="440" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.6">Incremental WAL Replication</text>
 
   <!-- ==================== BACKEND SECTION ==================== -->
-  <rect x="620" y="70" width="550" height="260" rx="8" fill="url(#backendGrad)" stroke="#a855f7" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
+  <rect x="620" y="70" width="550" height="260" rx="8" fill="url(#backendGrad)" stroke="#a855f7" stroke-width="1" opacity="0.8"/>
   <!-- Python icon -->
   <circle cx="642" cy="90" r="8" fill="#3776AB" opacity="0.25"/>
   <text x="642" y="94" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="800" opacity="0.7">Py</text>
@@ -184,11 +180,8 @@
   <text x="1080" y="258" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Redis Cache (optional)</text>
 
   <!-- ==================== DATABASE SECTION ==================== -->
-  <rect x="360" y="360" width="470" height="100" rx="8" fill="url(#dbGrad)" stroke="#3fcf8e" stroke-width="1" opacity="0.8" filter="url(#boxShadow)"/>
+  <rect x="360" y="360" width="470" height="100" rx="8" fill="url(#dbGrad)" stroke="#3fcf8e" stroke-width="1" opacity="0.8"/>
   <!-- Supabase official icon -->
-  <linearGradient id="archSupaGrad" x1="0" y1="0.5" x2="1" y2="1" gradientUnits="objectBoundingBox">
-    <stop stop-color="#249361"/><stop offset="1" stop-color="#3ECF8E"/>
-  </linearGradient>
   <g transform="translate(370, 374) scale(0.14)">
     <path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#archSupaGrad)"/>
     <path d="M45.317 2.07103C48.1765 -1.53037 53.9745 0.442937 54.0434 5.041L54.4849 72.2922H9.83113C1.64038 72.2922 -2.92775 62.8321 2.1655 56.4175L45.317 2.07103Z" fill="#3ECF8E"/>
@@ -215,7 +208,7 @@
   <text x="725" y="435" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">WAL replication</text>
 
   <!-- ==================== REDIS ==================== -->
-  <rect x="850" y="360" width="320" height="100" rx="8" fill="#1a1a3a" stroke="#ef4444" stroke-width="0.8" opacity="0.5" filter="url(#boxShadow)"/>
+  <rect x="850" y="360" width="320" height="100" rx="8" fill="#1a1a3a" stroke="#ef4444" stroke-width="0.8" opacity="0.5"/>
   <text x="870" y="388" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" letter-spacing="2">REDIS / UPSTASH</text>
   <text x="870" y="408" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.5">Optional · Agent Memory Cache</text>
   <text x="870" y="425" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="9" opacity="0.5">Conversation History · 24h TTL</text>

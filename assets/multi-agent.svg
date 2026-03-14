@@ -8,13 +8,6 @@
       <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.15"/>
       <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="boxShadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
   </defs>
 
   <rect width="1200" height="500" fill="url(#bg)"/>
@@ -130,7 +123,7 @@
 
     <rect x="0" y="190" width="340" height="32" rx="4" fill="#06b6d4" opacity="0.06"/>
     <text x="15" y="204" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Emotion-Driven Voice</text>
-    <text x="15" y="216" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">ElevenLabs v3 tags: [angry] [scared] [excited] [curious]</text>
+    <text x="15" y="216" fill="#06b6d4" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.5">Gemini TTS style prompts: angry / scared / excited / curious</text>
 
     <rect x="0" y="228" width="340" height="32" rx="4" fill="#ef4444" opacity="0.06"/>
     <text x="15" y="242" fill="#ef4444" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600">Function Calling</text>
@@ -145,6 +138,6 @@
   <!-- Bottom: Emotion flow -->
   <rect x="430" y="420" width="340" height="55" rx="6" fill="#0d0d18" stroke="#ff6b35" stroke-width="0.5" opacity="0.8"/>
   <text x="600" y="440" text-anchor="middle" fill="#ff6b35" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="600">EMOTION → BEHAVIOR PIPELINE</text>
-  <text x="600" y="458" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">LLM Analysis → 6-Axis State → System Prompt + ElevenLabs Tags + UI Indicators</text>
+  <text x="600" y="458" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">LLM Analysis → 6-Axis State → System Prompt + Gemini TTS Style + UI Indicators</text>
   <text x="600" y="470" text-anchor="middle" fill="#c8c8e0" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.4">fear:0.8 → [scared] voice · anger:0.7 → [angry] voice · trust:0.2 → [suspicious]</text>
 </svg>

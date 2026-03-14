@@ -4,13 +4,6 @@
       <stop offset="0%" stop-color="#0a0a14"/>
       <stop offset="100%" stop-color="#0f0f20"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="boxShadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
     <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
       <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b35"/>
     </marker>
@@ -23,7 +16,7 @@
 
   <!-- Phase boxes -->
   <!-- 1. Upload -->
-  <rect x="30" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3b82f6" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="30" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3b82f6" stroke-width="1"/>
   <text x="95" y="90" text-anchor="middle" fill="#60a5fa" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">UPLOAD</text>
   <text x="95" y="108" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">PDF / Text / Scenario</text>
   <text x="95" y="122" text-anchor="middle" fill="#93c5fd" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Mistral OCR</text>
@@ -33,7 +26,7 @@
   <line x1="162" y1="120" x2="182" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 2. Generate -->
-  <rect x="190" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#a855f7" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="190" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#a855f7" stroke-width="1"/>
   <text x="255" y="90" text-anchor="middle" fill="#c084fc" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">GENERATE</text>
   <text x="255" y="108" text-anchor="middle" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">5-8 AI Characters</text>
   <text x="255" y="122" text-anchor="middle" fill="#d8b4fe" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Big Five + MBTI</text>
@@ -43,7 +36,7 @@
   <line x1="322" y1="120" x2="342" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 3. Lobby -->
-  <rect x="350" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3fcf8e" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="350" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#3fcf8e" stroke-width="1"/>
   <text x="415" y="90" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">LOBBY</text>
   <text x="415" y="108" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Review Characters</text>
   <text x="415" y="122" text-anchor="middle" fill="#86efac" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Role Assignment</text>
@@ -53,7 +46,7 @@
   <line x1="482" y1="120" x2="502" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 4. Discussion -->
-  <rect x="510" y="65" width="150" height="110" rx="6" fill="#1a1a3a" stroke="#ff6b35" stroke-width="1.5" filter="url(#boxShadow)"/>
+  <rect x="510" y="65" width="150" height="110" rx="6" fill="#1a1a3a" stroke="#ff6b35" stroke-width="1.5"/>
   <text x="585" y="90" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">DISCUSSION</text>
   <text x="585" y="108" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">SSE Streaming Chat</text>
   <text x="585" y="122" text-anchor="middle" fill="#fdba74" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">25% Spontaneous Reactions</text>
@@ -63,7 +56,7 @@
   <line x1="662" y1="120" x2="682" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 5. Voting -->
-  <rect x="690" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#eab308" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="690" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#eab308" stroke-width="1"/>
   <text x="755" y="90" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">VOTING</text>
   <text x="755" y="108" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Parallel AI Votes</text>
   <text x="755" y="122" text-anchor="middle" fill="#fde047" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Staggered Reveal</text>
@@ -73,7 +66,7 @@
   <line x1="822" y1="120" x2="842" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 6. Reveal -->
-  <rect x="850" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#ef4444" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="850" y="65" width="130" height="110" rx="6" fill="#1a1a3a" stroke="#ef4444" stroke-width="1"/>
   <text x="915" y="90" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">REVEAL</text>
   <text x="915" y="108" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Hidden Role Exposed</text>
   <text x="915" y="122" text-anchor="middle" fill="#fca5a5" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Last Words (AI)</text>
@@ -83,7 +76,7 @@
   <line x1="982" y1="120" x2="1002" y2="120" stroke="#ff6b35" stroke-width="1.2" marker-end="url(#arrow)" opacity="0.6"/>
 
   <!-- 7. Night -->
-  <rect x="1010" y="65" width="160" height="110" rx="6" fill="#1a1a3a" stroke="#6366f1" stroke-width="1" filter="url(#boxShadow)"/>
+  <rect x="1010" y="65" width="160" height="110" rx="6" fill="#1a1a3a" stroke="#6366f1" stroke-width="1"/>
   <text x="1090" y="90" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700">NIGHT</text>
   <text x="1090" y="108" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Kill / Investigate / Protect</text>
   <text x="1090" y="122" text-anchor="middle" fill="#a5b4fc" font-family="Inter,system-ui,sans-serif" font-size="8" opacity="0.6">Save / Poison</text>
