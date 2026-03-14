@@ -56,6 +56,8 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
   const ttsProcessingRef = useRef(false);
   const queueAbortRef = useRef<AbortController | null>(null);
   const errorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Dedup: track recently queued text to prevent duplicate TTS
+  const recentQueuedRef = useRef<Set<string>>(new Set());
   const usingWebSpeechRef = useRef(false);
 
   const showError = useCallback(
@@ -319,6 +321,12 @@ export function useVoice({ onTranscript, onError, onTtsStart, onTtsEnd }: UseVoi
 
   const queueSingleResponse = useCallback(
     (text: string, agentRole: string) => {
+      // Dedup: skip if identical text was queued in last 3 seconds
+      const dedupKey = `${agentRole}::${text.slice(0, 80)}`;
+      if (recentQueuedRef.current.has(dedupKey)) return;
+      recentQueuedRef.current.add(dedupKey);
+      setTimeout(() => recentQueuedRef.current.delete(dedupKey), 3000);
+
       ttsQueueRef.current.push({ text, agentRole });
       processQueue();
     },

@@ -128,7 +128,7 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
           dispatch({ type: "STREAM_APPEND", actorKey, delta });
         });
       },
-      // onFinalize
+      // onFinalize — UI state update only. TTS is triggered earlier in event-handler.ts
       (actorKey, endEvent) => {
         dispatch({
           type: "STREAM_FINALIZE",
@@ -137,14 +137,6 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
           voiceId: endEvent.voice_id,
           emotion: endEvent.emotion,
         });
-        if ((endEvent.tts_text || endEvent.content) && endEvent.character_name) {
-          onCharacterResponseRef.current?.(
-            endEvent.tts_text || endEvent.content || "",
-            endEvent.character_name,
-            endEvent.voice_id,
-            endEvent.character_id,
-          );
-        }
       },
     );
   }
@@ -172,29 +164,49 @@ export function GameStateProvider({ children, onCharacterResponse }: GameStatePr
   // ── PowerSync integration ────────────────────────────────────────
   const ps = usePowerSyncGameState(state.psSessionId);
 
-  // Merge PowerSync character updates
+  // Merge PowerSync character updates (elimination status + player join detection)
   useEffect(() => {
     if (!ps.characters.length || !state.session) return;
-    const updates = ps.characters
-      .map((c: PSGameCharacter) => ({ id: c.id, is_eliminated: !!c.is_eliminated }))
-      .filter((u) => {
-        const sc = state.session!.characters.find((c) => c.id === u.id || c.name === (ps.characters.find((p: PSGameCharacter) => p.id === u.id)?.name));
-        return sc && sc.is_eliminated !== u.is_eliminated;
+
+    let hasChange = false;
+    const updatedChars = state.session.characters.map((sc) => {
+      const pc = ps.characters.find((p: PSGameCharacter) => p.id === sc.id);
+      if (!pc) return sc;
+      const newElim = !!pc.is_eliminated;
+      const newIsPlayer = !!pc.is_player;
+      if (newElim !== sc.is_eliminated || newIsPlayer !== (sc as any).is_player) {
+        hasChange = true;
+        return { ...sc, is_eliminated: newElim, is_player: newIsPlayer };
+      }
+      return sc;
+    });
+
+    if (hasChange) {
+      dispatch({
+        type: "PS_CHARACTERS_UPDATED",
+        updates: updatedChars.map((c) => ({ id: c.id, is_eliminated: c.is_eliminated })),
       });
-    if (updates.length > 0) {
-      dispatch({ type: "PS_CHARACTERS_UPDATED", updates });
     }
   }, [ps.characters, state.session]);
 
-  // Sync PowerSync session data
+  // Sync PowerSync session data (phase, round, tension, winner)
   useEffect(() => {
     if (!ps.gameSession) return;
+    const psPhase = ps.gameSession.phase;
+    const psRound = ps.gameSession.round;
+    const psWinner = ps.gameSession.winner;
+
     dispatch({
       type: "PS_SESSION_UPDATED",
-      winner: ps.gameSession.winner || undefined,
-      round: ps.gameSession.round || undefined,
+      winner: psWinner || undefined,
+      round: psRound || undefined,
       tension: ps.gameSession.tension_level,
     });
+
+    // If server phase advanced (e.g. friend started game), sync local phase
+    if (psPhase && state.phase === "lobby" && psPhase === "discussion") {
+      dispatch({ type: "SET_PHASE", phase: "discussion", round: psRound });
+    }
   }, [ps.gameSession]);
 
   // ── Sub-hooks ────────────────────────────────────────────────────

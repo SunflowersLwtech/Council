@@ -1,15 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Play, MapPin, Link2, Check } from "lucide-react";
+import { Users, Play, MapPin, Link2, Check, User } from "lucide-react";
 import { useGameState } from "@/hooks/useGameState";
 import { useI18n } from "@/lib/i18n";
 import CharacterCard from "@/components/CharacterCard";
+import { usePowerSyncGameState, type PSGameCharacter } from "@/hooks/usePowerSyncGameState";
 
 export default function GameLobby() {
   const { t } = useI18n();
-  const { session, showHowToPlay, error } = useGameState();
+  const { session, showHowToPlay, error, playerRole } = useGameState();
   const [copied, setCopied] = useState(false);
+
+  // Watch PowerSync for live player count
+  const ps = usePowerSyncGameState(session?.session_id ?? null);
+  const playerCount = ps.characters.filter((c: PSGameCharacter) => c.is_player).length;
 
   if (!session) return null;
 
@@ -28,6 +33,35 @@ export default function GameLobby() {
             {t("game.lobby.title")}
           </p>
         </div>
+
+        {/* Your Role Banner — show what character the player is */}
+        {playerRole && (
+          <div
+            className="glass-card p-4 animate-fade-in"
+            style={{
+              borderColor: playerRole.allies?.length > 0 ? "rgba(239,68,68,0.3)" : "rgba(59,130,246,0.3)",
+              boxShadow: `0 0 20px ${playerRole.allies?.length > 0 ? "rgba(239,68,68,0.1)" : "rgba(59,130,246,0.1)"}`,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center"
+                style={{
+                  backgroundColor: playerRole.allies?.length > 0 ? "rgba(239,68,68,0.15)" : "rgba(59,130,246,0.15)",
+                  color: playerRole.allies?.length > 0 ? "#ef4444" : "#3b82f6",
+                }}
+              >
+                <User size={16} />
+              </div>
+              <div>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>Your Secret Identity</p>
+                <p className="font-bold" style={{ color: playerRole.allies?.length > 0 ? "#ef4444" : "#3b82f6" }}>
+                  {playerRole.hidden_role} — {playerRole.faction}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Setting */}
         <div className="glass-card p-6">
@@ -60,6 +94,14 @@ export default function GameLobby() {
                 >
                   Invite Players
                 </span>
+                {playerCount > 0 && (
+                  <span
+                    className="text-xs px-2 py-0.5 rounded-full"
+                    style={{ backgroundColor: "rgba(34,197,94,0.15)", color: "#22c55e" }}
+                  >
+                    {playerCount} joined
+                  </span>
+                )}
               </div>
               <button
                 className="demo-btn text-xs px-3 py-1.5 flex items-center gap-1.5"
