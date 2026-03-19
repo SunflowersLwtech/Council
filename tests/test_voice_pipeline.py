@@ -13,6 +13,8 @@ os.environ.setdefault("MISTRAL_API_KEY", "test_key_for_unit_tests")
 
 from backend.voice.tts_middleware import VoiceMiddleware, inject_emotion_tags
 
+pytestmark = pytest.mark.voice
+
 
 # ── VoiceMiddleware Initialization ──────────────────────────────────
 

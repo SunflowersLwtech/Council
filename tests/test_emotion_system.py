@@ -23,42 +23,42 @@ from backend.voice.tts_middleware import inject_emotion_tags
 
 
 class TestEmotionTagInjection:
-    """Test that emotional states produce correct ElevenLabs v3 audio tags."""
+    """Test that emotional states produce correct Gemini-compatible style instructions."""
 
     def test_angry_tag(self):
         es = EmotionalState(anger=0.8)
         result = inject_emotion_tags("I disagree!", es)
-        assert result == "[angry]I disagree!"
+        assert "angrily" in result and "I disagree!" in result
 
     def test_scared_tag(self):
         es = EmotionalState(fear=0.8)
         result = inject_emotion_tags("What was that?", es)
-        assert result == "[scared]What was that?"
+        assert "fearfully" in result and "What was that?" in result
 
     def test_excited_tag(self):
         es = EmotionalState(happiness=0.9, energy=0.8)
         result = inject_emotion_tags("We found them!", es)
-        assert result == "[excited]We found them!"
+        assert "excitement" in result and "We found them!" in result
 
     def test_laughs_tag(self):
         es = EmotionalState(happiness=0.8, energy=0.3)
         result = inject_emotion_tags("How amusing.", es)
-        assert result == "[laughs]How amusing."
+        assert "cheerfully" in result and "How amusing." in result
 
     def test_curious_tag(self):
         es = EmotionalState(curiosity=0.8)
         result = inject_emotion_tags("Tell me more.", es)
-        assert result == "[curious]Tell me more."
+        assert "curiosity" in result and "Tell me more." in result
 
     def test_suspicious_tag(self):
         es = EmotionalState(trust=0.2)
         result = inject_emotion_tags("I don't believe you.", es)
-        assert result == "[suspicious]I don't believe you."
+        assert "suspiciously" in result and "I don't believe you." in result
 
     def test_sighs_tag(self):
         es = EmotionalState(energy=0.1)
         result = inject_emotion_tags("This is exhausting.", es)
-        assert result == "[sighs]This is exhausting."
+        assert "wearily" in result and "This is exhausting." in result
 
     def test_neutral_no_tag(self):
         es = EmotionalState()
@@ -69,13 +69,13 @@ class TestEmotionTagInjection:
         """Anger should take precedence over fear when both are high."""
         es = EmotionalState(anger=0.7, fear=0.7)
         result = inject_emotion_tags("Stop!", es)
-        assert result.startswith("[angry]")
+        assert "angrily" in result
 
     def test_priority_fear_over_happiness(self):
         """Fear beats happiness when anger is low."""
         es = EmotionalState(anger=0.1, fear=0.8, happiness=0.9, energy=0.9)
         result = inject_emotion_tags("Oh no!", es)
-        assert result.startswith("[scared]")
+        assert "fearfully" in result
 
 
 # ── Personality-Modulated Emotion Updates ───────────────────────────
