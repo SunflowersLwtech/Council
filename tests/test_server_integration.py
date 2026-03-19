@@ -115,6 +115,7 @@ class TestOrchestratorGuard:
 # ── Voice Endpoints ─────────────────────────────────────────────────
 
 
+@pytest.mark.voice
 class TestVoiceEndpoints:
 
     @pytest.mark.asyncio
@@ -155,6 +156,7 @@ class TestVoiceEndpoints:
 
 class TestRequestValidation:
 
+    @pytest.mark.voice
     @pytest.mark.asyncio
     async def test_tts_request_schema(self):
         """Verify TTSRequest schema enforcement."""
