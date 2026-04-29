@@ -756,8 +756,4 @@ This project is licensed under the MIT License.
 <a href="https://aistudio.google.com"><img src="https://img.shields.io/badge/Gemini_TTS-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini TTS"/></a>
 <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase"/></a>
 
-<br/>
-
-**Built for the [PowerSync AI Hackathon](https://www.powersync.com)**
-
 </div>

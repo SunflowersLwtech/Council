@@ -9,7 +9,7 @@ region: us
 replication:
   connections:
     - type: postgresql
-      uri: postgresql://powersync_role:***REMOVED***@db.zxbyaofevfsaieukcuuj.supabase.co:5432/postgres
+      uri: postgresql://powersync_role:ps_council_2026@db.zxbyaofevfsaieukcuuj.supabase.co:5432/postgres
       sslmode: verify-full
 
 client_auth:
